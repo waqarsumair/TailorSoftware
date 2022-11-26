@@ -704,6 +704,65 @@ namespace EasyTailor
             }
         }
 
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void metroButton3_Click(object sender, EventArgs e)
+        {
+            TailorPrintPreview.Document = TailorPrint;
+            TailorPrintPreview.ShowDialog();
+        }
+
+        private void TailorPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Rectangle rect1 = new Rectangle(0, 0, 850, 100);
+            Rectangle rect2 = new Rectangle(200, 80, 450, 25);
+            Rectangle rect3 = new Rectangle(0, 110, 850, 25);
+            Rectangle rect4 = new Rectangle(0, 140, 850, 25);
+            Rectangle rect5 = new Rectangle(10, 205, 200, 200);
+           
+            e.Graphics.FillRectangle(Brushes.DarkGreen,rect2);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            e.Graphics.DrawString("CHIEF TAILORS", new Font("Arial Rounded MT", 36, FontStyle.Bold), Brushes.Red, rect1, stringFormat);
+            e.Graphics.DrawString("GENTS SPECIALIST", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.White, rect2, stringFormat);
+
+            e.Graphics.DrawString("ستوں روڈ ، ٹھٹہ (سندہ)۔", new Font("Jameel Noori Nastaleeq", 18, FontStyle.Bold), Brushes.DarkGreen, rect3, stringFormat);
+
+            e.Graphics.DrawString("MOB: 0321-3270001", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, rect4, stringFormat);
+
+            Pen blackPen4 = new Pen(Color.DarkGreen, 1);
+            PointF point4 = new PointF(15, 170);
+            PointF point5 = new PointF(830, 170);
+            e.Graphics.DrawLine(blackPen4, point4, point5);
+
+            e.Graphics.DrawString("Proprietor:", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, new Point(10, 170));
+            e.Graphics.DrawString("Veeram & Harri Lal", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.DarkGreen, rect5);
+
+            Pen blackPen = new Pen(Color.DarkGreen, 1);
+            e.Graphics.DrawRectangle(blackPen, rect5);
+
+            e.Graphics.DrawString("No.____________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 200));
+            e.Graphics.DrawString(SnoTB.Text, new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(275, 195));
+
+            e.Graphics.DrawString("Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(400, 200));
+            e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(440, 195));
+
+            e.Graphics.DrawString("Delivery Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(600, 200));
+            e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(695, 195));
+
+            e.Graphics.DrawString("Name: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 230));
+            e.Graphics.DrawString("MUHAMMAD ARSLAN ABBASI", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 230));
+
+            e.Graphics.DrawString("Qty: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 260));
+            e.Graphics.DrawString("15", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 260));
+
+        }
+
         private void BalanceTB_TextChanged(object sender, EventArgs e)
         {
             CheckNumericAndTotal();
