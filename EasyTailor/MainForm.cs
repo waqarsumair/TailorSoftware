@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace EasyTailor
         private void MainForm_Load(object sender, EventArgs e)
         {
             ListUpdateBtn.Hide();
-            ConnectionString = "Data Source=DESKTOP-T497H6H;Initial Catalog=EasyTailor;Integrated Security=True";
+            ConnectionString = "Data Source=DESKTOP-966OP3S;Initial Catalog=EasyTailor;Integrated Security=True";
             FieldGridView.DataSource = GetAllFields();
             GetFieldsInPanel();
         }
@@ -109,15 +110,55 @@ namespace EasyTailor
             {
                 if (AddFieldBtn.Text == "ADD")
                 {
+                    AddColumn();
                     SaveRecord();
                 }
                 else
                 {
+                    RenameColumn();
                     UpdateRecord();
                 }
                 ClearScreen();
                 FieldGridView.DataSource = GetAllFields();
                 GetFieldsInPanel();
+            }
+        }
+
+        private void AddColumn()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("ALTER TABLE CustomerDetails ADD " + FieldNameTB.Text + " nvarchar(max);", conn))
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void DeleteColumn()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("ALTER TABLE CustomerDetails DROP COLUMN " + oldname + ";", conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@ColumnName", FieldNameTB.Text);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        string oldname = "";
+        private void RenameColumn()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("EXEC sp_RENAME 'CustomerDetails." + oldname + "', '" + FieldNameTB.Text + "', 'COLUMN'", conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@ColumnName", FieldNameTB.Text);
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -184,6 +225,7 @@ namespace EasyTailor
         {
             if(MessageBox.Show("Are you sure you want to delete this field...","EASY",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
+                DeleteColumn();
                 DeleteRecord();
                 ClearScreen();
                 FieldGridView.DataSource = GetAllFields();
@@ -198,14 +240,74 @@ namespace EasyTailor
                 AddFieldBtn.Text = "UPDATE";
                 DataGridViewRow item = FieldGridView.SelectedRows[0];
                 FieldIdTB.Text = item.Cells[0].Value.ToString();
+                oldname = item.Cells[1].Value.ToString();
                 FieldNameTB.Text = item.Cells[1].Value.ToString();
             }
         }
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            SaveCustomerRecord();
+            CheckCustomerDuplicate();
+            if (CustomerNameTB.Text == Name)
+            {
+                UpdateClothDetail();
+            }
+            else
+            {
+                SaveCustomerRecord();
+            }
+            if(AddBtn.Text == "UPDATE")
+            {
+                InvoiceUpdateRecord(invoiceid);
+            }
+            else
+            {
+                InvoiceSaveRecord();
+            }
+            
             ClearCustomerScreen();
+        }
+        private void InvoiceUpdateRecord(string id)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Update Invoices SET Date = @Date,DeliveryDate = @DeliveryDate,CustomerName = @CustomerName,CustomerNo = @CustomerNo,DressQty = @DressQty,TotalAmount = @TotalAmount,Advance = @Advance,Balance = @Balance,Description = @Description where id = @Id", conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@Date", StandardDatePicker.Text);
+                    cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
+                    cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
+                    cmd.Parameters.AddWithValue("@CustomerNo", CustomerNoTB.Text);
+                    cmd.Parameters.AddWithValue("@DressQty", DressQtyTB.Text);
+                    cmd.Parameters.AddWithValue("@TotalAmount", TotalAmountTB.Text);
+                    cmd.Parameters.AddWithValue("@Advance", AdvanceTB.Text);
+                    cmd.Parameters.AddWithValue("@Balance", BalanceTB.Text);
+                    cmd.Parameters.AddWithValue("@Description", DescriptionTB.Text);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void InvoiceSaveRecord()
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Insert Into Invoices(Date,DeliveryDate,CustomerName,CustomerNo,DressQty,TotalAmount,Advance,Balance,Description) VALUES(@Date,@DeliveryDate,@CustomerName,@CustomerNo,@DressQty,@TotalAmount,@Advance,@Balance,@Description)", conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@Date", StandardDatePicker.Text);
+                    cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
+                    cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
+                    cmd.Parameters.AddWithValue("@CustomerNo", CustomerNoTB.Text);
+                    cmd.Parameters.AddWithValue("@DressQty", DressQtyTB.Text);
+                    cmd.Parameters.AddWithValue("@TotalAmount", TotalAmountTB.Text);
+                    cmd.Parameters.AddWithValue("@Advance", AdvanceTB.Text);
+                    cmd.Parameters.AddWithValue("@Balance", BalanceTB.Text);
+                    cmd.Parameters.AddWithValue("@Description", DescriptionTB.Text);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private void SaveCustomerRecord()
@@ -280,6 +382,7 @@ namespace EasyTailor
             DescriptionTB.Clear();
             eu = "";
             ClothId = "";
+            AddBtn.Text = "ADD";
             ListUpdateBtn.Hide(); 
             GetFieldsInPanel();
             CustomerNameTB.Focus();
@@ -356,6 +459,7 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroButton Edit;
                 Edit = new MetroFramework.Controls.MetroButton();
                 Edit.Name = row["ID"].ToString();
+                Edit.Tag = row["CustomerName"].ToString();
                 Edit.Click += Edit_Button;
                 Edit.BackgroundImage = Properties.Resources.edit;
                 Edit.BackgroundImageLayout = ImageLayout.Stretch;
@@ -378,6 +482,7 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroButton Open;
                 Open = new MetroFramework.Controls.MetroButton();
                 Open.Name = row["ID"].ToString();
+                Open.Tag = row["CustomerName"].ToString();
                 Open.Click += Open_Button;
                 Open.BackgroundImage = Properties.Resources.maximize;
                 Open.BackgroundImageLayout = ImageLayout.Stretch;
@@ -438,10 +543,10 @@ namespace EasyTailor
 
                
 
-                Panel pl = new Panel();
-                pl.Size = new Size(246, 1);
-                p.Controls.Add(pl);
-                pl.Location = new Point(3, 40);
+                //Panel pl = new Panel();
+                //pl.Size = new Size(246, 1);
+                //p.Controls.Add(pl);
+                //pl.Location = new Point(3, 40);
 
                 MetroFramework.Controls.MetroLabel Name;
                 Name = new MetroFramework.Controls.MetroLabel();
@@ -482,13 +587,6 @@ namespace EasyTailor
                 p.Controls.Add(Advance);
                 Advance.Location = new Point(145, 97);
 
-                MetroFramework.Controls.MetroLabel AdvanceLabel;
-                AdvanceLabel = new MetroFramework.Controls.MetroLabel();
-                AdvanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                AdvanceLabel.Text = "Advance";
-                p.Controls.Add(AdvanceLabel);
-                AdvanceLabel.Location = new Point(141, 82);
-
                 MetroFramework.Controls.MetroLabel Balance;
                 Balance = new MetroFramework.Controls.MetroLabel();
                 Balance.AutoSize = false;
@@ -497,15 +595,6 @@ namespace EasyTailor
                 p.Controls.Add(Balance);
                 Balance.Location = new Point(201, 97);
 
-
-                MetroFramework.Controls.MetroLabel TotalLabel;
-                TotalLabel = new MetroFramework.Controls.MetroLabel();
-                TotalLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                TotalLabel.Text = "Total Amount";
-                p.Controls.Add(TotalLabel);
-                TotalLabel.Location = new Point(63, 82);
-
-
                 MetroFramework.Controls.MetroLabel BalanceLabel;
                 BalanceLabel = new MetroFramework.Controls.MetroLabel();
                 BalanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
@@ -513,8 +602,21 @@ namespace EasyTailor
                 p.Controls.Add(BalanceLabel);
                 BalanceLabel.Location = new Point(197, 82);
 
+                MetroFramework.Controls.MetroLabel AdvanceLabel;
+                AdvanceLabel = new MetroFramework.Controls.MetroLabel();
+                AdvanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                AdvanceLabel.Text = "Advance";
+                p.Controls.Add(AdvanceLabel);
+                AdvanceLabel.Location = new Point(141, 82);
 
                
+
+                MetroFramework.Controls.MetroLabel TotalLabel;
+                TotalLabel = new MetroFramework.Controls.MetroLabel();
+                TotalLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                TotalLabel.Text = "Total Amount";
+                p.Controls.Add(TotalLabel);
+                TotalLabel.Location = new Point(63, 82);
 
                 MetroFramework.Controls.MetroLabel QtyLabel;
                 QtyLabel = new MetroFramework.Controls.MetroLabel();
@@ -541,7 +643,8 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroButton Edit;
                 Edit = new MetroFramework.Controls.MetroButton();
                 Edit.Name = row["ID"].ToString();
-                //Edit.Click += Edit_Button;
+                Edit.Tag = row["CustomerName"].ToString();
+                Edit.Click += Invoice_Edit_Button;
                 Edit.BackgroundImage = Properties.Resources.edit;
                 Edit.BackgroundImageLayout = ImageLayout.Stretch;
                 Edit.Highlight = true;
@@ -552,7 +655,8 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroButton Delete;
                 Delete = new MetroFramework.Controls.MetroButton();
                 Delete.Name = row["ID"].ToString();
-                //Delete.Click += Delete_Button;
+                Delete.Tag = row["CustomerName"].ToString();
+                Delete.Click += Invoice_Delete_Button;
                 Delete.BackgroundImage = Properties.Resources.delete;
                 Delete.BackgroundImageLayout = ImageLayout.Stretch;
                 Delete.Highlight = true;
@@ -561,6 +665,96 @@ namespace EasyTailor
                 Delete.Location = new Point(219, 128);
 
                 CustomersPanel.Controls.Add(p);
+            }
+        }
+
+        private void Invoice_Delete_Button(object sender, EventArgs e)
+        {
+            MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
+            if (MessageBox.Show("Are you sure you want to delete this field...", "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                DeleteInvoiceRecord(btn.Name);
+                GetInvoices(btn.Tag.ToString());
+                GetInvoicesInPanel();
+            }
+        }
+
+        private void DeleteInvoiceRecord(string Id)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Delete From Invoices where ID = @ID", conn))
+                {
+                    conn.Open();
+                    cmd.Parameters.AddWithValue("@ID", Id);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        string invoiceid = "";
+        private void Invoice_Edit_Button(object sender, EventArgs e)
+        {
+            MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
+            eu = "Update";
+            AddBtn.Text = "UPDATE";
+            ClothId = btn.Tag.ToString();
+            GetClothDetail(btn.Tag.ToString());
+            GetInvoiceDetail(btn.Name);
+            invoiceid = btn.Name;
+            metroTabControl1.SelectedTab = NewTab;
+            DressQtyTB.Focus();
+        }
+
+        private DataTable GetInvoiceDetail(string ID)
+        {
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Select * from Invoices where Id = @Id", conn))
+                {
+                    cmd.Parameters.AddWithValue("@Id", ID);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        StandardDatePicker.Text = reader["Date"].ToString();
+                        DeliveryDatePicker.Text = reader["DeliveryDate"].ToString();
+                        InvoiceCustomerNameTB.Text = reader["CustomerName"].ToString();
+                        InvoiceCustomerNoTB.Text = reader["CustomerNo"].ToString();
+                        DressQtyTB.Text = reader["DressQty"].ToString();
+                        TotalAmountTB.Text = reader["TotalAmount"].ToString();
+                        AdvanceTB.Text = reader["Advance"].ToString();
+                        BalanceTB.Text = reader["Balance"].ToString();
+                        DescriptionTB.Text = reader["Description"].ToString();
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
+            }
+        }
+
+
+        private DataTable GetClothDetail(string Name)
+        {
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Select * from CustomerDetails where CustomerName = @CustomerName", conn))
+                {
+                    cmd.Parameters.AddWithValue("@CustomerName", Name);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        CustomerNameTB.Text = reader["CustomerName"].ToString();
+                        CustomerNoTB.Text = reader["CustomerNo"].ToString();
+
+                        foreach (DataRow row in Fields.Rows)
+                        {
+                            FieldPanel.Controls[row["FieldName"].ToString()].Text = reader[row["FieldName"].ToString()].ToString();
+                        }
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
             }
         }
 
@@ -585,7 +779,7 @@ namespace EasyTailor
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
             eu = "Update";
-            ClothId = btn.Name;
+            ClothId = btn.Tag.ToString();
             CheckCustomerDuplicate(btn.Name);
             metroTabControl1.SelectedTab = NewTab;
             DressQtyTB.Focus();
@@ -597,7 +791,7 @@ namespace EasyTailor
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
             eu = "Update";
-            ClothId = btn.Name;
+            ClothId = btn.Tag.ToString();
             CheckCustomerDuplicate(btn.Name);
             metroTabControl1.SelectedTab = NewTab;
             ListUpdateBtn.Show();
@@ -762,16 +956,16 @@ namespace EasyTailor
 
                     query = query + ",[" + row["FieldName"].ToString() + "] = @" + Para.Last() + i;
                 }
-                query = query + " Where ID = @ID";
+                query = query + " Where CustomerName = @CustomerNames";
                 i = 0;
             }
-            else { query = query + " Where ID = @ID"; }
+            else { query = query + " Where CustomerName = @CustomerNames"; }
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     conn.Open();
-                    cmd.Parameters.AddWithValue("@ID",ClothId);
+                    cmd.Parameters.AddWithValue("@CustomerNames", ClothId);
                     cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
                     cmd.Parameters.AddWithValue("@CustomerNo", CustomerNoTB.Text);
                     foreach (DataRow row in Fields.Rows)
@@ -843,6 +1037,44 @@ namespace EasyTailor
             e.Graphics.DrawString("Qty: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 260));
             e.Graphics.DrawString("15", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 260));
 
+        }
+
+        private void metroLabel17_Click(object sender, EventArgs e)
+        {
+            Image File;
+            OpenFileDialog f = new OpenFileDialog();
+            f.Filter = "Image files (*.jpg, *.png) | *.jpg; *.png";
+
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                File = Image.FromFile(f.FileName);
+                pictureBox1.Image = File;
+                pictureBox1.Image.Save(@"" + ShopNameTB.Text + ".jpg");
+            }
+        }
+
+        private void metroButton1_Click_1(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Premium = PackageCombo.Text;
+            Properties.Settings.Default.PX = this.Location.X;
+            Properties.Settings.Default.PY = this.Location.Y;
+            Properties.Settings.Default.Save();
+        }
+
+        private void metroLabel18_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+            if (File.Exists(@"" + ShopNameTB.Text + ".jpg"))
+            {
+                try
+                {
+                    File.Delete(@"" + ShopNameTB.Text + ".jpg");
+                }
+                catch (Exception ex)
+                {
+                    //Do something
+                }
+            }
         }
 
         private void BalanceTB_TextChanged(object sender, EventArgs e)
