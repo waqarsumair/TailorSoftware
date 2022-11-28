@@ -21,7 +21,7 @@ namespace EasyTailor
         private void MainForm_Load(object sender, EventArgs e)
         {
             ListUpdateBtn.Hide();
-            ConnectionString = "Data Source=DESKTOP-966OP3S;Initial Catalog=EasyTailor;Integrated Security=True";
+            ConnectionString = "Data Source=DESKTOP-T497H6H;Initial Catalog=EasyTailor;Integrated Security=True";
             FieldGridView.DataSource = GetAllFields();
             GetFieldsInPanel();
         }
@@ -394,93 +394,175 @@ namespace EasyTailor
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
             GetInvoices(btn.Name);
+            GetInvoicesInPanel();
         }
 
-        //private void GetCustomersinPanel()
-        //{
-        //    CustomersPanel.Controls.Clear();
-        //    foreach (DataRow row in Customers.Rows)
-        //    {
-        //        Panel p = new Panel();
-        //        p.Size = new Size(243, 125);
-        //        p.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+        private void GetInvoicesInPanel()
+        {
+            CustomersPanel.Controls.Clear();
+            foreach (DataRow row in Invoices.Rows)
+            {
+                Panel p = new Panel();
+                p.Size = new Size(255, 163);
+                p.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 
-        //        MetroFramework.Controls.MetroLabel Name;
-        //        Name = new MetroFramework.Controls.MetroLabel();
-        //        Name.Text = row["CustomerName"].ToString();
-        //        Name.AutoSize = false;
-        //        Name.Size = new Size(234, 23);
-        //        p.Controls.Add(Name);
-        //        Name.Location = new Point(4, 18);
+                MetroFramework.Controls.MetroLabel Date;
+                Date = new MetroFramework.Controls.MetroLabel();
+                Date.AutoSize = false;
+                Date.Size = new Size(118, 23);
+                Date.Text = row["Date"].ToString();
+                p.Controls.Add(Date);
+                Date.Location = new Point(3, 19);
 
-        //        MetroFramework.Controls.MetroLabel NameLabel;
-        //        NameLabel = new MetroFramework.Controls.MetroLabel();
-        //        NameLabel.Text = "Name";
-        //        NameLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-        //        p.Controls.Add(NameLabel);
-        //        NameLabel.Location = new Point(4, 4);
+                MetroFramework.Controls.MetroLabel DDate;
+                DDate = new MetroFramework.Controls.MetroLabel();
+                DDate.AutoSize = false;
+                DDate.Size = new Size(122, 23);
+                DDate.Text = row["DeliveryDate"].ToString();
+                p.Controls.Add(DDate);
+                DDate.Location = new Point(127, 19);
 
-        //        MetroFramework.Controls.MetroLabel Number;
-        //        Number = new MetroFramework.Controls.MetroLabel();
-        //        Number.Text = row["CustomerNo"].ToString();
-        //        Number.AutoSize = false;
-        //        Number.Size = new Size(234, 23);
-        //        p.Controls.Add(Number);
-        //        Number.Location = new Point(4, 61);
+                MetroFramework.Controls.MetroLabel DateLabel;
+                DateLabel = new MetroFramework.Controls.MetroLabel();
+                DateLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                DateLabel.Text = "Date";
+                p.Controls.Add(DateLabel);
+                DateLabel.Location = new Point(3, 5);
 
-        //        MetroFramework.Controls.MetroLabel NumberLabel;
-        //        NumberLabel = new MetroFramework.Controls.MetroLabel();
-        //        NumberLabel.Text = "PhoneNo";
-        //        NumberLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-        //        p.Controls.Add(NumberLabel);
-        //        NumberLabel.Location = new Point(4, 47);
+                MetroFramework.Controls.MetroLabel DDateLabel;
+                DDateLabel = new MetroFramework.Controls.MetroLabel();
+                DDateLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                DDateLabel.Text = "Delivery Date";
+                p.Controls.Add(DDateLabel);
+                DDateLabel.Location = new Point(127, 5);
 
-        //        MetroFramework.Controls.MetroButton Invoice;
-        //        Invoice = new MetroFramework.Controls.MetroButton();
-        //        Invoice.Name = row["CustomerName"].ToString();
-        //        Invoice.Click += Invoice_Button;
-        //        Invoice.Text = "SHOW INVOICES";
-        //        Invoice.Highlight = true;
-        //        Invoice.Size = new Size(120, 30);
-        //        p.Controls.Add(Invoice);
-        //        Invoice.Location = new Point(4, 89);
+               
 
-        //        MetroFramework.Controls.MetroButton Edit;
-        //        Edit = new MetroFramework.Controls.MetroButton();
-        //        Edit.Name = row["ID"].ToString();
-        //        Edit.Click += Edit_Button;
-        //        Edit.BackgroundImage = Properties.Resources.edit;
-        //        Edit.BackgroundImageLayout = ImageLayout.Stretch;
-        //        Edit.Highlight = true;
-        //        Edit.Size = new Size(30, 30);
-        //        p.Controls.Add(Edit);
-        //        Edit.Location = new Point(130, 89);
+                Panel pl = new Panel();
+                pl.Size = new Size(246, 1);
+                p.Controls.Add(pl);
+                pl.Location = new Point(3, 40);
 
-        //        MetroFramework.Controls.MetroButton Delete;
-        //        Delete = new MetroFramework.Controls.MetroButton();
-        //        Delete.Name = row["ID"].ToString();
-        //        Delete.Click += Delete_Button;
-        //        Delete.BackgroundImage = Properties.Resources.delete;
-        //        Delete.BackgroundImageLayout = ImageLayout.Stretch;
-        //        Delete.Highlight = true;
-        //        Delete.Size = new Size(30, 30);
-        //        p.Controls.Add(Delete);
-        //        Delete.Location = new Point(166, 89);
+                MetroFramework.Controls.MetroLabel Name;
+                Name = new MetroFramework.Controls.MetroLabel();
+                Name.AutoSize = false;
+                Name.Size = new Size(234, 23);
+                Name.Text = row["CustomerName"].ToString();
+                p.Controls.Add(Name);
+                Name.Location = new Point(3, 56);
 
-        //        MetroFramework.Controls.MetroButton Open;
-        //        Open = new MetroFramework.Controls.MetroButton();
-        //        Open.Name = row["ID"].ToString();
-        //        Open.Click += Open_Button;
-        //        Open.BackgroundImage = Properties.Resources.maximize;
-        //        Open.BackgroundImageLayout = ImageLayout.Stretch;
-        //        Open.Highlight = true;
-        //        Open.Size = new Size(30, 30);
-        //        p.Controls.Add(Open);
-        //        Open.Location = new Point(203, 89);
+                MetroFramework.Controls.MetroLabel NameLabel;
+                NameLabel = new MetroFramework.Controls.MetroLabel();
+                NameLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                NameLabel.Text = "Name";
+                p.Controls.Add(NameLabel);
+                NameLabel.Location = new Point(3, 42);
 
-        //        CustomersPanel.Controls.Add(p);
-        //    }
-        //}
+                MetroFramework.Controls.MetroLabel Qty;
+                Qty = new MetroFramework.Controls.MetroLabel();
+                Qty.AutoSize = false;
+                Qty.Size = new Size(56, 15);
+                Qty.Text = row["DressQty"].ToString();
+                p.Controls.Add(Qty);
+                Qty.Location = new Point(3, 97);
+
+                MetroFramework.Controls.MetroLabel Total;
+                Total = new MetroFramework.Controls.MetroLabel();
+                Total.AutoSize = false;
+                Total.Size = new Size(70, 15);
+                Total.Text = row["TotalAmount"].ToString();
+                p.Controls.Add(Total);
+                Total.Location = new Point(67, 97);
+
+                MetroFramework.Controls.MetroLabel Advance;
+                Advance = new MetroFramework.Controls.MetroLabel();
+                Advance.AutoSize = false;
+                Advance.Size = new Size(46, 15);
+                Advance.Text = row["Advance"].ToString();
+                p.Controls.Add(Advance);
+                Advance.Location = new Point(145, 97);
+
+                MetroFramework.Controls.MetroLabel AdvanceLabel;
+                AdvanceLabel = new MetroFramework.Controls.MetroLabel();
+                AdvanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                AdvanceLabel.Text = "Advance";
+                p.Controls.Add(AdvanceLabel);
+                AdvanceLabel.Location = new Point(141, 82);
+
+                MetroFramework.Controls.MetroLabel Balance;
+                Balance = new MetroFramework.Controls.MetroLabel();
+                Balance.AutoSize = false;
+                Balance.Size = new Size(41, 15);
+                Balance.Text = row["Balance"].ToString();
+                p.Controls.Add(Balance);
+                Balance.Location = new Point(201, 97);
+
+
+                MetroFramework.Controls.MetroLabel TotalLabel;
+                TotalLabel = new MetroFramework.Controls.MetroLabel();
+                TotalLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                TotalLabel.Text = "Total Amount";
+                p.Controls.Add(TotalLabel);
+                TotalLabel.Location = new Point(63, 82);
+
+
+                MetroFramework.Controls.MetroLabel BalanceLabel;
+                BalanceLabel = new MetroFramework.Controls.MetroLabel();
+                BalanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                BalanceLabel.Text = "Balance";
+                p.Controls.Add(BalanceLabel);
+                BalanceLabel.Location = new Point(197, 82);
+
+
+               
+
+                MetroFramework.Controls.MetroLabel QtyLabel;
+                QtyLabel = new MetroFramework.Controls.MetroLabel();
+                QtyLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                QtyLabel.Text = "Dress Qty";
+                p.Controls.Add(QtyLabel);
+                QtyLabel.Location = new Point(3, 82);
+
+                MetroFramework.Controls.MetroLabel Description;
+                Description = new MetroFramework.Controls.MetroLabel();
+                Description.AutoSize = false;
+                Description.Size = new Size(162, 23);
+                Description.Text = row["Description"].ToString();
+                p.Controls.Add(Description);
+                Description.Location = new Point(3, 133);
+
+                MetroFramework.Controls.MetroLabel DescriptionLabel;
+                DescriptionLabel = new MetroFramework.Controls.MetroLabel();
+                DescriptionLabel.FontSize = MetroFramework.MetroLabelSize.Small;
+                DescriptionLabel.Text = "Description";
+                p.Controls.Add(DescriptionLabel);
+                DescriptionLabel.Location = new Point(3, 118);
+
+                MetroFramework.Controls.MetroButton Edit;
+                Edit = new MetroFramework.Controls.MetroButton();
+                Edit.Name = row["ID"].ToString();
+                //Edit.Click += Edit_Button;
+                Edit.BackgroundImage = Properties.Resources.edit;
+                Edit.BackgroundImageLayout = ImageLayout.Stretch;
+                Edit.Highlight = true;
+                Edit.Size = new Size(30, 30);
+                p.Controls.Add(Edit);
+                Edit.Location = new Point(183, 128);
+
+                MetroFramework.Controls.MetroButton Delete;
+                Delete = new MetroFramework.Controls.MetroButton();
+                Delete.Name = row["ID"].ToString();
+                //Delete.Click += Delete_Button;
+                Delete.BackgroundImage = Properties.Resources.delete;
+                Delete.BackgroundImageLayout = ImageLayout.Stretch;
+                Delete.Highlight = true;
+                Delete.Size = new Size(30, 30);
+                p.Controls.Add(Delete);
+                Delete.Location = new Point(219, 128);
+
+                CustomersPanel.Controls.Add(p);
+            }
+        }
 
         DataTable Invoices = new DataTable();
         private DataTable GetInvoices(string cname)
@@ -488,7 +570,7 @@ namespace EasyTailor
             Invoices.Rows.Clear();
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(@"Select * from Invoices where CustomerName = @CustomerName", conn))
+                using (SqlCommand cmd = new SqlCommand(@"Select ID,format(Date,'dd-MMM-yyyy') as 'Date',format(DeliveryDate,'dd-MMM-yyyy') as 'DeliveryDate',CustomerName,CustomerNo,DressQty,TotalAmount,Advance,Balance,Description from Invoices where CustomerName = @CustomerName", conn))
                 {
                     conn.Open();
                     cmd.Parameters.AddWithValue("@CustomerName", cname);

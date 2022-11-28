@@ -30,8 +30,8 @@ namespace EasyTailor
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.NewTab = new MetroFramework.Controls.MetroTabPage();
@@ -42,6 +42,7 @@ namespace EasyTailor
             this.CustomerNoTB = new MetroFramework.Controls.MetroTextBox();
             this.CustomerNameTB = new MetroFramework.Controls.MetroTextBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.metroButton3 = new MetroFramework.Controls.MetroButton();
             this.metroButton2 = new MetroFramework.Controls.MetroButton();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.FieldPanel = new System.Windows.Forms.Panel();
@@ -54,6 +55,7 @@ namespace EasyTailor
             this.metroLabel23 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel22 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel21 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel34 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel20 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
@@ -64,32 +66,13 @@ namespace EasyTailor
             this.DressQtyTB = new MetroFramework.Controls.MetroTextBox();
             this.TotalAmountTB = new MetroFramework.Controls.MetroTextBox();
             this.BalanceTB = new MetroFramework.Controls.MetroTextBox();
+            this.SnoTB = new MetroFramework.Controls.MetroTextBox();
             this.InvoiceCustomerNoTB = new MetroFramework.Controls.MetroTextBox();
             this.DescriptionTB = new MetroFramework.Controls.MetroTextBox();
             this.InvoiceCustomerNameTB = new MetroFramework.Controls.MetroTextBox();
             this.HomeTab = new MetroFramework.Controls.MetroTabPage();
             this.FindTab = new MetroFramework.Controls.MetroTabPage();
             this.CustomersPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.metroLabel28 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel33 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel31 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel27 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel16 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
-            this.metroButton5 = new MetroFramework.Controls.MetroButton();
-            this.metroLabel32 = new MetroFramework.Controls.MetroLabel();
-            this.metroButton4 = new MetroFramework.Controls.MetroButton();
-            this.metroLabel30 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel29 = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
-            this.panel6 = new System.Windows.Forms.Panel();
             this.FindSearchBtn = new MetroFramework.Controls.MetroButton();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -109,23 +92,39 @@ namespace EasyTailor
             this.FieldNameTB = new MetroFramework.Controls.MetroTextBox();
             this.SettingTab = new MetroFramework.Controls.MetroTabPage();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.panel8 = new System.Windows.Forms.Panel();
             this.TailorPrint = new System.Drawing.Printing.PrintDocument();
             this.TailorPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
-            this.metroButton3 = new MetroFramework.Controls.MetroButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SnoTB = new MetroFramework.Controls.MetroTextBox();
-            this.metroLabel34 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel29 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel30 = new MetroFramework.Controls.MetroLabel();
+            this.metroButton4 = new MetroFramework.Controls.MetroButton();
+            this.metroLabel32 = new MetroFramework.Controls.MetroLabel();
+            this.metroButton5 = new MetroFramework.Controls.MetroButton();
+            this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel16 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel27 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel31 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel33 = new MetroFramework.Controls.MetroLabel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.metroLabel28 = new MetroFramework.Controls.MetroLabel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.metroTabControl1.SuspendLayout();
             this.NewTab.SuspendLayout();
             this.FindTab.SuspendLayout();
             this.CustomersPanel.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.AddCloth.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FieldGridView)).BeginInit();
             this.FieldContext.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            this.panel6.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -138,7 +137,7 @@ namespace EasyTailor
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
+            this.metroTabControl1.SelectedIndex = 2;
             this.metroTabControl1.Size = new System.Drawing.Size(1223, 615);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
@@ -146,7 +145,6 @@ namespace EasyTailor
             // 
             // NewTab
             // 
-            this.NewTab.Controls.Add(this.label1);
             this.NewTab.Controls.Add(this.ListUpdateBtn);
             this.NewTab.Controls.Add(this.panel7);
             this.NewTab.Controls.Add(this.metroLabel12);
@@ -200,7 +198,7 @@ namespace EasyTailor
             this.ListUpdateBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ListUpdateBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ListUpdateBtn.Highlight = true;
-            this.ListUpdateBtn.Location = new System.Drawing.Point(249, 533);
+            this.ListUpdateBtn.Location = new System.Drawing.Point(249, 530);
             this.ListUpdateBtn.Name = "ListUpdateBtn";
             this.ListUpdateBtn.Size = new System.Drawing.Size(65, 23);
             this.ListUpdateBtn.TabIndex = 3;
@@ -215,7 +213,7 @@ namespace EasyTailor
             this.panel7.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.panel7.Location = new System.Drawing.Point(322, 32);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(7, 549);
+            this.panel7.Size = new System.Drawing.Size(7, 546);
             this.panel7.TabIndex = 57;
             // 
             // metroLabel12
@@ -308,6 +306,18 @@ namespace EasyTailor
             this.panel5.Size = new System.Drawing.Size(7, 250);
             this.panel5.TabIndex = 56;
             // 
+            // metroButton3
+            // 
+            this.metroButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.metroButton3.Highlight = true;
+            this.metroButton3.Location = new System.Drawing.Point(769, 301);
+            this.metroButton3.Name = "metroButton3";
+            this.metroButton3.Size = new System.Drawing.Size(128, 30);
+            this.metroButton3.TabIndex = 12;
+            this.metroButton3.Text = "RESET";
+            this.metroButton3.UseSelectable = true;
+            this.metroButton3.Click += new System.EventHandler(this.metroButton3_Click);
+            // 
             // metroButton2
             // 
             this.metroButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -341,7 +351,7 @@ namespace EasyTailor
             this.FieldPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FieldPanel.Location = new System.Drawing.Point(19, 151);
             this.FieldPanel.Name = "FieldPanel";
-            this.FieldPanel.Size = new System.Drawing.Size(297, 407);
+            this.FieldPanel.Size = new System.Drawing.Size(297, 404);
             this.FieldPanel.TabIndex = 2;
             // 
             // metroLabel4
@@ -422,6 +432,15 @@ namespace EasyTailor
             this.metroLabel21.Size = new System.Drawing.Size(65, 19);
             this.metroLabel21.TabIndex = 39;
             this.metroLabel21.Text = "Dress Qty";
+            // 
+            // metroLabel34
+            // 
+            this.metroLabel34.AutoSize = true;
+            this.metroLabel34.Location = new System.Drawing.Point(820, 43);
+            this.metroLabel34.Name = "metroLabel34";
+            this.metroLabel34.Size = new System.Drawing.Size(37, 19);
+            this.metroLabel34.TabIndex = 40;
+            this.metroLabel34.Text = "S.No";
             // 
             // metroLabel20
             // 
@@ -612,6 +631,42 @@ namespace EasyTailor
             this.BalanceTB.TextChanged += new System.EventHandler(this.BalanceTB_TextChanged);
             this.BalanceTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.AllKeyPress);
             // 
+            // SnoTB
+            // 
+            // 
+            // 
+            // 
+            this.SnoTB.CustomButton.Image = null;
+            this.SnoTB.CustomButton.Location = new System.Drawing.Point(132, 2);
+            this.SnoTB.CustomButton.Name = "";
+            this.SnoTB.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.SnoTB.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.SnoTB.CustomButton.TabIndex = 1;
+            this.SnoTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.SnoTB.CustomButton.UseSelectable = true;
+            this.SnoTB.CustomButton.Visible = false;
+            this.SnoTB.Enabled = false;
+            this.SnoTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.SnoTB.Lines = new string[] {
+        "16565"};
+            this.SnoTB.Location = new System.Drawing.Point(823, 63);
+            this.SnoTB.MaxLength = 32767;
+            this.SnoTB.Name = "SnoTB";
+            this.SnoTB.PasswordChar = '\0';
+            this.SnoTB.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.SnoTB.SelectedText = "";
+            this.SnoTB.SelectionLength = 0;
+            this.SnoTB.SelectionStart = 0;
+            this.SnoTB.ShortcutsEnabled = true;
+            this.SnoTB.Size = new System.Drawing.Size(160, 30);
+            this.SnoTB.TabIndex = 1;
+            this.SnoTB.Text = "16565";
+            this.SnoTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SnoTB.UseSelectable = true;
+            this.SnoTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.SnoTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.SnoTB.TextChanged += new System.EventHandler(this.InvoiceCustomerNoTB_TextChanged);
+            // 
             // InvoiceCustomerNoTB
             // 
             // 
@@ -753,221 +808,8 @@ namespace EasyTailor
             this.CustomersPanel.Controls.Add(this.panel1);
             this.CustomersPanel.Location = new System.Drawing.Point(20, 102);
             this.CustomersPanel.Name = "CustomersPanel";
-            this.CustomersPanel.Size = new System.Drawing.Size(1175, 438);
+            this.CustomersPanel.Size = new System.Drawing.Size(1175, 435);
             this.CustomersPanel.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.metroLabel28);
-            this.panel1.Controls.Add(this.panel6);
-            this.panel1.Controls.Add(this.metroLabel33);
-            this.panel1.Controls.Add(this.metroLabel31);
-            this.panel1.Controls.Add(this.metroLabel11);
-            this.panel1.Controls.Add(this.metroLabel27);
-            this.panel1.Controls.Add(this.metroLabel17);
-            this.panel1.Controls.Add(this.metroLabel15);
-            this.panel1.Controls.Add(this.metroLabel18);
-            this.panel1.Controls.Add(this.metroLabel9);
-            this.panel1.Controls.Add(this.metroLabel16);
-            this.panel1.Controls.Add(this.metroLabel14);
-            this.panel1.Controls.Add(this.metroLabel10);
-            this.panel1.Controls.Add(this.metroButton5);
-            this.panel1.Controls.Add(this.metroLabel32);
-            this.panel1.Controls.Add(this.metroButton4);
-            this.panel1.Controls.Add(this.metroLabel30);
-            this.panel1.Controls.Add(this.metroLabel29);
-            this.panel1.Controls.Add(this.metroLabel8);
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(255, 163);
-            this.panel1.TabIndex = 0;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
-            // 
-            // metroLabel28
-            // 
-            this.metroLabel28.Location = new System.Drawing.Point(3, 133);
-            this.metroLabel28.Name = "metroLabel28";
-            this.metroLabel28.Size = new System.Drawing.Size(162, 23);
-            this.metroLabel28.TabIndex = 0;
-            this.metroLabel28.Text = "Sumair Nahiyo";
-            // 
-            // metroLabel33
-            // 
-            this.metroLabel33.Location = new System.Drawing.Point(127, 19);
-            this.metroLabel33.Name = "metroLabel33";
-            this.metroLabel33.Size = new System.Drawing.Size(122, 23);
-            this.metroLabel33.TabIndex = 0;
-            this.metroLabel33.Text = "01-Nov-2022";
-            // 
-            // metroLabel31
-            // 
-            this.metroLabel31.Location = new System.Drawing.Point(3, 19);
-            this.metroLabel31.Name = "metroLabel31";
-            this.metroLabel31.Size = new System.Drawing.Size(118, 23);
-            this.metroLabel31.TabIndex = 0;
-            this.metroLabel31.Text = "01-Nov-2022";
-            // 
-            // metroLabel11
-            // 
-            this.metroLabel11.Location = new System.Drawing.Point(3, 56);
-            this.metroLabel11.Name = "metroLabel11";
-            this.metroLabel11.Size = new System.Drawing.Size(234, 23);
-            this.metroLabel11.TabIndex = 0;
-            this.metroLabel11.Text = "Sumair Nahiyo";
-            // 
-            // metroLabel27
-            // 
-            this.metroLabel27.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel27.Location = new System.Drawing.Point(201, 97);
-            this.metroLabel27.Name = "metroLabel27";
-            this.metroLabel27.Size = new System.Drawing.Size(41, 15);
-            this.metroLabel27.TabIndex = 0;
-            this.metroLabel27.Text = "10";
-            this.metroLabel27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // metroLabel17
-            // 
-            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel17.Location = new System.Drawing.Point(145, 97);
-            this.metroLabel17.Name = "metroLabel17";
-            this.metroLabel17.Size = new System.Drawing.Size(46, 15);
-            this.metroLabel17.TabIndex = 0;
-            this.metroLabel17.Text = "10";
-            this.metroLabel17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // metroLabel15
-            // 
-            this.metroLabel15.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel15.Location = new System.Drawing.Point(67, 97);
-            this.metroLabel15.Name = "metroLabel15";
-            this.metroLabel15.Size = new System.Drawing.Size(70, 15);
-            this.metroLabel15.TabIndex = 0;
-            this.metroLabel15.Text = "10";
-            this.metroLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // metroLabel18
-            // 
-            this.metroLabel18.AutoSize = true;
-            this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel18.Location = new System.Drawing.Point(197, 82);
-            this.metroLabel18.Name = "metroLabel18";
-            this.metroLabel18.Size = new System.Drawing.Size(45, 15);
-            this.metroLabel18.TabIndex = 0;
-            this.metroLabel18.Text = "Balance";
-            // 
-            // metroLabel9
-            // 
-            this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel9.Location = new System.Drawing.Point(3, 97);
-            this.metroLabel9.Name = "metroLabel9";
-            this.metroLabel9.Size = new System.Drawing.Size(56, 15);
-            this.metroLabel9.TabIndex = 0;
-            this.metroLabel9.Text = "10";
-            this.metroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // metroLabel16
-            // 
-            this.metroLabel16.AutoSize = true;
-            this.metroLabel16.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel16.Location = new System.Drawing.Point(141, 82);
-            this.metroLabel16.Name = "metroLabel16";
-            this.metroLabel16.Size = new System.Drawing.Size(50, 15);
-            this.metroLabel16.TabIndex = 0;
-            this.metroLabel16.Text = "Advance";
-            // 
-            // metroLabel14
-            // 
-            this.metroLabel14.AutoSize = true;
-            this.metroLabel14.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel14.Location = new System.Drawing.Point(63, 82);
-            this.metroLabel14.Name = "metroLabel14";
-            this.metroLabel14.Size = new System.Drawing.Size(74, 15);
-            this.metroLabel14.TabIndex = 0;
-            this.metroLabel14.Text = "Total Amount";
-            // 
-            // metroLabel10
-            // 
-            this.metroLabel10.AutoSize = true;
-            this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel10.Location = new System.Drawing.Point(3, 82);
-            this.metroLabel10.Name = "metroLabel10";
-            this.metroLabel10.Size = new System.Drawing.Size(56, 15);
-            this.metroLabel10.TabIndex = 0;
-            this.metroLabel10.Text = "Dress Qty";
-            // 
-            // metroButton5
-            // 
-            this.metroButton5.BackColor = System.Drawing.Color.White;
-            this.metroButton5.BackgroundImage = global::EasyTailor.Properties.Resources.delete;
-            this.metroButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.metroButton5.Highlight = true;
-            this.metroButton5.Location = new System.Drawing.Point(219, 128);
-            this.metroButton5.Name = "metroButton5";
-            this.metroButton5.Size = new System.Drawing.Size(30, 30);
-            this.metroButton5.TabIndex = 61;
-            this.metroButton5.UseSelectable = true;
-            // 
-            // metroLabel32
-            // 
-            this.metroLabel32.AutoSize = true;
-            this.metroLabel32.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel32.Location = new System.Drawing.Point(127, 5);
-            this.metroLabel32.Name = "metroLabel32";
-            this.metroLabel32.Size = new System.Drawing.Size(73, 15);
-            this.metroLabel32.TabIndex = 0;
-            this.metroLabel32.Text = "Delivery Date";
-            // 
-            // metroButton4
-            // 
-            this.metroButton4.BackColor = System.Drawing.Color.White;
-            this.metroButton4.BackgroundImage = global::EasyTailor.Properties.Resources.edit;
-            this.metroButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.metroButton4.Highlight = true;
-            this.metroButton4.Location = new System.Drawing.Point(183, 128);
-            this.metroButton4.Name = "metroButton4";
-            this.metroButton4.Size = new System.Drawing.Size(30, 30);
-            this.metroButton4.TabIndex = 61;
-            this.metroButton4.UseSelectable = true;
-            // 
-            // metroLabel30
-            // 
-            this.metroLabel30.AutoSize = true;
-            this.metroLabel30.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel30.Location = new System.Drawing.Point(3, 5);
-            this.metroLabel30.Name = "metroLabel30";
-            this.metroLabel30.Size = new System.Drawing.Size(31, 15);
-            this.metroLabel30.TabIndex = 0;
-            this.metroLabel30.Text = "Date";
-            // 
-            // metroLabel29
-            // 
-            this.metroLabel29.AutoSize = true;
-            this.metroLabel29.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel29.Location = new System.Drawing.Point(3, 118);
-            this.metroLabel29.Name = "metroLabel29";
-            this.metroLabel29.Size = new System.Drawing.Size(63, 15);
-            this.metroLabel29.TabIndex = 0;
-            this.metroLabel29.Text = "Description";
-            // 
-            // metroLabel8
-            // 
-            this.metroLabel8.AutoSize = true;
-            this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Small;
-            this.metroLabel8.Location = new System.Drawing.Point(3, 42);
-            this.metroLabel8.Name = "metroLabel8";
-            this.metroLabel8.Size = new System.Drawing.Size(38, 15);
-            this.metroLabel8.TabIndex = 0;
-            this.metroLabel8.Text = "Name";
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.DimGray;
-            this.panel6.Controls.Add(this.panel8);
-            this.panel6.Location = new System.Drawing.Point(3, 40);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(246, 1);
-            this.panel6.TabIndex = 1;
             // 
             // FindSearchBtn
             // 
@@ -1069,8 +911,8 @@ namespace EasyTailor
             this.FieldGridView.AllowUserToDeleteRows = false;
             this.FieldGridView.AllowUserToResizeColumns = false;
             this.FieldGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(255)))));
-            this.FieldGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(255)))));
+            this.FieldGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.FieldGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1085,13 +927,13 @@ namespace EasyTailor
             this.FieldGridView.MultiSelect = false;
             this.FieldGridView.Name = "FieldGridView";
             this.FieldGridView.ReadOnly = true;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.FieldGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.FieldGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.FieldGridView.RowHeadersVisible = false;
             this.FieldGridView.RowHeadersWidth = 51;
             this.FieldGridView.RowTemplate.Height = 30;
@@ -1277,14 +1119,6 @@ namespace EasyTailor
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // panel8
-            // 
-            this.panel8.BackColor = System.Drawing.Color.DimGray;
-            this.panel8.Location = new System.Drawing.Point(0, 3);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(246, 1);
-            this.panel8.TabIndex = 2;
-            // 
             // TailorPrint
             // 
             this.TailorPrint.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.TailorPrint_PrintPage);
@@ -1299,74 +1133,226 @@ namespace EasyTailor
             this.TailorPrintPreview.Name = "TailorPrintPreview";
             this.TailorPrintPreview.Visible = false;
             // 
-            // metroButton3
+            // metroLabel8
             // 
-            this.metroButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.metroButton3.Highlight = true;
-            this.metroButton3.Location = new System.Drawing.Point(769, 301);
-            this.metroButton3.Name = "metroButton3";
-            this.metroButton3.Size = new System.Drawing.Size(128, 30);
-            this.metroButton3.TabIndex = 12;
-            this.metroButton3.Text = "RESET";
-            this.metroButton3.UseSelectable = true;
-            this.metroButton3.Click += new System.EventHandler(this.metroButton3_Click);
+            this.metroLabel8.AutoSize = true;
+            this.metroLabel8.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel8.Location = new System.Drawing.Point(3, 42);
+            this.metroLabel8.Name = "metroLabel8";
+            this.metroLabel8.Size = new System.Drawing.Size(38, 15);
+            this.metroLabel8.TabIndex = 0;
+            this.metroLabel8.Text = "Name";
             // 
-            // label1
+            // metroLabel29
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(375, 361);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(366, 55);
-            this.label1.TabIndex = 61;
-            this.label1.Text = "CHIEF TAILOR";
+            this.metroLabel29.AutoSize = true;
+            this.metroLabel29.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel29.Location = new System.Drawing.Point(3, 118);
+            this.metroLabel29.Name = "metroLabel29";
+            this.metroLabel29.Size = new System.Drawing.Size(63, 15);
+            this.metroLabel29.TabIndex = 0;
+            this.metroLabel29.Text = "Description";
             // 
-            // SnoTB
+            // metroLabel30
             // 
+            this.metroLabel30.AutoSize = true;
+            this.metroLabel30.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel30.Location = new System.Drawing.Point(3, 5);
+            this.metroLabel30.Name = "metroLabel30";
+            this.metroLabel30.Size = new System.Drawing.Size(31, 15);
+            this.metroLabel30.TabIndex = 0;
+            this.metroLabel30.Text = "Date";
             // 
+            // metroButton4
             // 
+            this.metroButton4.BackColor = System.Drawing.Color.White;
+            this.metroButton4.BackgroundImage = global::EasyTailor.Properties.Resources.edit;
+            this.metroButton4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.metroButton4.Highlight = true;
+            this.metroButton4.Location = new System.Drawing.Point(183, 128);
+            this.metroButton4.Name = "metroButton4";
+            this.metroButton4.Size = new System.Drawing.Size(30, 30);
+            this.metroButton4.TabIndex = 61;
+            this.metroButton4.UseSelectable = true;
             // 
-            this.SnoTB.CustomButton.Image = null;
-            this.SnoTB.CustomButton.Location = new System.Drawing.Point(132, 2);
-            this.SnoTB.CustomButton.Name = "";
-            this.SnoTB.CustomButton.Size = new System.Drawing.Size(25, 25);
-            this.SnoTB.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.SnoTB.CustomButton.TabIndex = 1;
-            this.SnoTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.SnoTB.CustomButton.UseSelectable = true;
-            this.SnoTB.CustomButton.Visible = false;
-            this.SnoTB.Enabled = false;
-            this.SnoTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.SnoTB.Lines = new string[] {
-        "16565"};
-            this.SnoTB.Location = new System.Drawing.Point(823, 63);
-            this.SnoTB.MaxLength = 32767;
-            this.SnoTB.Name = "SnoTB";
-            this.SnoTB.PasswordChar = '\0';
-            this.SnoTB.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.SnoTB.SelectedText = "";
-            this.SnoTB.SelectionLength = 0;
-            this.SnoTB.SelectionStart = 0;
-            this.SnoTB.ShortcutsEnabled = true;
-            this.SnoTB.Size = new System.Drawing.Size(160, 30);
-            this.SnoTB.TabIndex = 1;
-            this.SnoTB.Text = "16565";
-            this.SnoTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.SnoTB.UseSelectable = true;
-            this.SnoTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.SnoTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            this.SnoTB.TextChanged += new System.EventHandler(this.InvoiceCustomerNoTB_TextChanged);
+            // metroLabel32
             // 
-            // metroLabel34
+            this.metroLabel32.AutoSize = true;
+            this.metroLabel32.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel32.Location = new System.Drawing.Point(127, 5);
+            this.metroLabel32.Name = "metroLabel32";
+            this.metroLabel32.Size = new System.Drawing.Size(73, 15);
+            this.metroLabel32.TabIndex = 0;
+            this.metroLabel32.Text = "Delivery Date";
             // 
-            this.metroLabel34.AutoSize = true;
-            this.metroLabel34.Location = new System.Drawing.Point(820, 43);
-            this.metroLabel34.Name = "metroLabel34";
-            this.metroLabel34.Size = new System.Drawing.Size(37, 19);
-            this.metroLabel34.TabIndex = 40;
-            this.metroLabel34.Text = "S.No";
+            // metroButton5
+            // 
+            this.metroButton5.BackColor = System.Drawing.Color.White;
+            this.metroButton5.BackgroundImage = global::EasyTailor.Properties.Resources.delete;
+            this.metroButton5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.metroButton5.Highlight = true;
+            this.metroButton5.Location = new System.Drawing.Point(219, 128);
+            this.metroButton5.Name = "metroButton5";
+            this.metroButton5.Size = new System.Drawing.Size(30, 30);
+            this.metroButton5.TabIndex = 61;
+            this.metroButton5.UseSelectable = true;
+            // 
+            // metroLabel10
+            // 
+            this.metroLabel10.AutoSize = true;
+            this.metroLabel10.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel10.Location = new System.Drawing.Point(3, 82);
+            this.metroLabel10.Name = "metroLabel10";
+            this.metroLabel10.Size = new System.Drawing.Size(56, 15);
+            this.metroLabel10.TabIndex = 0;
+            this.metroLabel10.Text = "Dress Qty";
+            // 
+            // metroLabel14
+            // 
+            this.metroLabel14.AutoSize = true;
+            this.metroLabel14.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel14.Location = new System.Drawing.Point(63, 82);
+            this.metroLabel14.Name = "metroLabel14";
+            this.metroLabel14.Size = new System.Drawing.Size(74, 15);
+            this.metroLabel14.TabIndex = 0;
+            this.metroLabel14.Text = "Total Amount";
+            // 
+            // metroLabel16
+            // 
+            this.metroLabel16.AutoSize = true;
+            this.metroLabel16.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel16.Location = new System.Drawing.Point(141, 82);
+            this.metroLabel16.Name = "metroLabel16";
+            this.metroLabel16.Size = new System.Drawing.Size(50, 15);
+            this.metroLabel16.TabIndex = 0;
+            this.metroLabel16.Text = "Advance";
+            // 
+            // metroLabel9
+            // 
+            this.metroLabel9.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel9.Location = new System.Drawing.Point(3, 97);
+            this.metroLabel9.Name = "metroLabel9";
+            this.metroLabel9.Size = new System.Drawing.Size(56, 15);
+            this.metroLabel9.TabIndex = 0;
+            this.metroLabel9.Text = "10";
+            this.metroLabel9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metroLabel18
+            // 
+            this.metroLabel18.AutoSize = true;
+            this.metroLabel18.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel18.Location = new System.Drawing.Point(197, 82);
+            this.metroLabel18.Name = "metroLabel18";
+            this.metroLabel18.Size = new System.Drawing.Size(45, 15);
+            this.metroLabel18.TabIndex = 0;
+            this.metroLabel18.Text = "Balance";
+            // 
+            // metroLabel15
+            // 
+            this.metroLabel15.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel15.Location = new System.Drawing.Point(67, 97);
+            this.metroLabel15.Name = "metroLabel15";
+            this.metroLabel15.Size = new System.Drawing.Size(70, 15);
+            this.metroLabel15.TabIndex = 0;
+            this.metroLabel15.Text = "10";
+            this.metroLabel15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metroLabel17
+            // 
+            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel17.Location = new System.Drawing.Point(145, 97);
+            this.metroLabel17.Name = "metroLabel17";
+            this.metroLabel17.Size = new System.Drawing.Size(46, 15);
+            this.metroLabel17.TabIndex = 0;
+            this.metroLabel17.Text = "10";
+            this.metroLabel17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metroLabel27
+            // 
+            this.metroLabel27.FontSize = MetroFramework.MetroLabelSize.Small;
+            this.metroLabel27.Location = new System.Drawing.Point(201, 97);
+            this.metroLabel27.Name = "metroLabel27";
+            this.metroLabel27.Size = new System.Drawing.Size(41, 15);
+            this.metroLabel27.TabIndex = 0;
+            this.metroLabel27.Text = "10";
+            this.metroLabel27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // metroLabel11
+            // 
+            this.metroLabel11.Location = new System.Drawing.Point(3, 56);
+            this.metroLabel11.Name = "metroLabel11";
+            this.metroLabel11.Size = new System.Drawing.Size(234, 23);
+            this.metroLabel11.TabIndex = 0;
+            this.metroLabel11.Text = "Sumair Nahiyo";
+            // 
+            // metroLabel31
+            // 
+            this.metroLabel31.Location = new System.Drawing.Point(3, 19);
+            this.metroLabel31.Name = "metroLabel31";
+            this.metroLabel31.Size = new System.Drawing.Size(118, 23);
+            this.metroLabel31.TabIndex = 0;
+            this.metroLabel31.Text = "01-Nov-2022";
+            // 
+            // metroLabel33
+            // 
+            this.metroLabel33.Location = new System.Drawing.Point(127, 19);
+            this.metroLabel33.Name = "metroLabel33";
+            this.metroLabel33.Size = new System.Drawing.Size(122, 23);
+            this.metroLabel33.TabIndex = 0;
+            this.metroLabel33.Text = "01-Nov-2022";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.DimGray;
+            this.panel6.Controls.Add(this.panel8);
+            this.panel6.Location = new System.Drawing.Point(3, 40);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(246, 1);
+            this.panel6.TabIndex = 1;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.DimGray;
+            this.panel8.Location = new System.Drawing.Point(0, 3);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(246, 1);
+            this.panel8.TabIndex = 2;
+            // 
+            // metroLabel28
+            // 
+            this.metroLabel28.Location = new System.Drawing.Point(3, 133);
+            this.metroLabel28.Name = "metroLabel28";
+            this.metroLabel28.Size = new System.Drawing.Size(162, 23);
+            this.metroLabel28.TabIndex = 0;
+            this.metroLabel28.Text = "Sumair Nahiyo";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.metroLabel28);
+            this.panel1.Controls.Add(this.panel6);
+            this.panel1.Controls.Add(this.metroLabel33);
+            this.panel1.Controls.Add(this.metroLabel31);
+            this.panel1.Controls.Add(this.metroLabel11);
+            this.panel1.Controls.Add(this.metroLabel27);
+            this.panel1.Controls.Add(this.metroLabel17);
+            this.panel1.Controls.Add(this.metroLabel15);
+            this.panel1.Controls.Add(this.metroLabel18);
+            this.panel1.Controls.Add(this.metroLabel9);
+            this.panel1.Controls.Add(this.metroLabel16);
+            this.panel1.Controls.Add(this.metroLabel14);
+            this.panel1.Controls.Add(this.metroLabel10);
+            this.panel1.Controls.Add(this.metroButton5);
+            this.panel1.Controls.Add(this.metroLabel32);
+            this.panel1.Controls.Add(this.metroButton4);
+            this.panel1.Controls.Add(this.metroLabel30);
+            this.panel1.Controls.Add(this.metroLabel29);
+            this.panel1.Controls.Add(this.metroLabel8);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(255, 163);
+            this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
             // MainForm
             // 
@@ -1385,14 +1371,14 @@ namespace EasyTailor
             this.FindTab.ResumeLayout(false);
             this.FindTab.PerformLayout();
             this.CustomersPanel.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel6.ResumeLayout(false);
             this.AddCloth.ResumeLayout(false);
             this.AddCloth.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FieldGridView)).EndInit();
             this.FieldContext.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            this.panel6.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1454,33 +1440,32 @@ namespace EasyTailor
         private System.Windows.Forms.FlowLayoutPanel CustomersPanel;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private MetroFramework.Controls.MetroButton ListUpdateBtn;
+        private System.Drawing.Printing.PrintDocument TailorPrint;
+        private System.Windows.Forms.PrintPreviewDialog TailorPrintPreview;
+        private MetroFramework.Controls.MetroButton metroButton3;
+        private MetroFramework.Controls.MetroLabel metroLabel34;
+        private MetroFramework.Controls.MetroTextBox SnoTB;
         private System.Windows.Forms.Panel panel1;
-        private MetroFramework.Controls.MetroLabel metroLabel8;
-        private MetroFramework.Controls.MetroLabel metroLabel10;
+        private MetroFramework.Controls.MetroLabel metroLabel28;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Panel panel8;
+        private MetroFramework.Controls.MetroLabel metroLabel33;
+        private MetroFramework.Controls.MetroLabel metroLabel31;
         private MetroFramework.Controls.MetroLabel metroLabel11;
-        private MetroFramework.Controls.MetroButton metroButton4;
-        private MetroFramework.Controls.MetroButton metroButton5;
-        private MetroFramework.Controls.MetroLabel metroLabel9;
         private MetroFramework.Controls.MetroLabel metroLabel27;
         private MetroFramework.Controls.MetroLabel metroLabel17;
         private MetroFramework.Controls.MetroLabel metroLabel15;
         private MetroFramework.Controls.MetroLabel metroLabel18;
+        private MetroFramework.Controls.MetroLabel metroLabel9;
         private MetroFramework.Controls.MetroLabel metroLabel16;
         private MetroFramework.Controls.MetroLabel metroLabel14;
-        private MetroFramework.Controls.MetroLabel metroLabel28;
-        private MetroFramework.Controls.MetroLabel metroLabel29;
-        private MetroFramework.Controls.MetroLabel metroLabel31;
-        private MetroFramework.Controls.MetroLabel metroLabel30;
-        private MetroFramework.Controls.MetroLabel metroLabel33;
+        private MetroFramework.Controls.MetroLabel metroLabel10;
+        private MetroFramework.Controls.MetroButton metroButton5;
         private MetroFramework.Controls.MetroLabel metroLabel32;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Panel panel8;
-        private System.Drawing.Printing.PrintDocument TailorPrint;
-        private System.Windows.Forms.PrintPreviewDialog TailorPrintPreview;
-        private MetroFramework.Controls.MetroButton metroButton3;
-        private System.Windows.Forms.Label label1;
-        private MetroFramework.Controls.MetroLabel metroLabel34;
-        private MetroFramework.Controls.MetroTextBox SnoTB;
+        private MetroFramework.Controls.MetroButton metroButton4;
+        private MetroFramework.Controls.MetroLabel metroLabel30;
+        private MetroFramework.Controls.MetroLabel metroLabel29;
+        private MetroFramework.Controls.MetroLabel metroLabel8;
     }
 }
 
