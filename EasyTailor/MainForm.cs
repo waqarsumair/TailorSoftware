@@ -21,11 +21,157 @@ namespace EasyTailor
         string ConnectionString = "";
         private void MainForm_Load(object sender, EventArgs e)
         {
+            LanguageCombo.SelectedValueChanged -= LanguageCombo_SelectedValueChanged;
+            GetSettings();
             ListUpdateBtn.Hide();
             ConnectionString = "Data Source=DESKTOP-966OP3S;Initial Catalog=EasyTailor;Integrated Security=True";
             FieldGridView.DataSource = GetAllFields();
             GetFieldsInPanel();
+            pictureBox1.ImageLocation = @"" + ShopNameTB.Text + ".jpg";
+            GetInvoiceNo();
+            LangauageChanger();
+            LanguageCombo.SelectedValueChanged += LanguageCombo_SelectedValueChanged;
         }
+        private void LangauageChanger()
+        {
+            if (LanguageCombo.Text == "ENGLISH")
+            {
+                RightLeftFunction(ContentAlignment.MiddleLeft, HorizontalAlignment.Left);
+            }
+            else
+            {
+                RightLeftFunction(ContentAlignment.MiddleRight, HorizontalAlignment.Right);
+            }
+
+            GetLanguages();
+            SetLangauage();
+        }
+
+        private void SetLangauage()
+        {
+     
+            ClothDetailLabel.Text = lan[0]; CustomerNameLabel.Text = lan[1]; CustomerNoLabel.Text = lan[2];
+            NewInvoiceLabel.Text = lan[3]; DateLabel.Text = lan[4]; DeliveryDateLabel.Text = lan[5];
+            InvoiceNoLabel.Text = lan[6]; InvoiceCustomerLabel.Text = lan[7]; InvoiceCustomerNoLabel.Text = lan[8];
+            DressQtyLabel.Text = lan[9]; TotalAmountLabel.Text = lan[10]; AdvanceLabel.Text = lan[11];
+            BalanceLabel.Text = lan[12]; DescriptionLabel.Text = lan[13];
+
+            metroButton2.Text = lan[14]; AddBtn.Text = lan[15]; HomeTab.Text = lan[16]; NewTab.Text = lan[17];
+            FindTab.Text = lan[18]; AddCloth.Text = lan[19]; SettingTab.Text = lan[20];
+            FindCustomerLabel.Text = lan[18]; FindSearchLabel.Text = lan[21]; FindSearchBtn.Text = lan[21]; 
+            FieldNameLabel.Text = lan[22]; SearchFieldLabel.Text = lan[23]; AddFieldBtn.Text = lan[15];
+            FieldResetBtn.Text = lan[14]; SearchBtn.Text = lan[21];
+
+
+            ShopNameLabel.Text = lan[24]; ShopAddressLabel.Text = lan[25]; LanguageLabel.Text = lan[26];
+            PrintPageLabel.Text = lan[27]; ShopQuoteLabel.Text = lan[28]; PrintNoteLabel.Text = lan[29];
+            metroLabel16.Text = lan[30]; metroLabel18.Text = lan[31]; metroLabel17.Text = lan[32];
+            metroButton1.Text = lan[33];
+        }
+
+        string[] lan = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+        private DataTable GetLanguages()
+        {
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Select " + LanguageCombo.Text + " From Languages", conn))
+                {
+                    int i = 0;
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        lan[i] = reader[LanguageCombo.Text].ToString();
+                        i++;
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
+            }
+        }
+
+        private void RightLeftFunction(ContentAlignment co, HorizontalAlignment ha)
+        {
+            //New Customer Label
+            ClothDetailLabel.TextAlign = co;
+            CustomerNameLabel.TextAlign = co;
+            CustomerNoLabel.TextAlign = co;
+            NewInvoiceLabel.TextAlign = co;
+            DateLabel.TextAlign = co;
+            DeliveryDateLabel.TextAlign = co;
+            InvoiceNoLabel.TextAlign = co;
+            InvoiceCustomerLabel.TextAlign = co;
+            InvoiceCustomerNoLabel.TextAlign = co;
+            DressQtyLabel.TextAlign = co;
+            TotalAmountLabel.TextAlign = co;
+            AdvanceLabel.TextAlign = co;
+            BalanceLabel.TextAlign = co;
+            DescriptionLabel.TextAlign = co;
+            //New Customer Text Boxes
+            CustomerNameTB.TextAlign = ha;
+            CustomerNoTB.TextAlign = ha;
+            InvoiceCustomerNameTB.TextAlign = ha;
+            InvoiceCustomerNoTB.TextAlign = ha;
+            DescriptionTB.TextAlign = ha;
+
+            //Find Customer Label
+            FindSearchLabel.TextAlign = co;
+
+            //Find Customer Text Boxes
+            FindSearchTB.TextAlign = ha;
+
+            //Add Cloth Field Label
+            FieldNameLabel.TextAlign = co;
+            SearchFieldLabel.TextAlign = co;
+
+            //Add Cloth Field Text Boxes
+            FieldNameTB.TextAlign = ha;
+            SearchFieldTB.TextAlign = ha;
+
+            //Settings Label
+            ShopNameLabel.TextAlign = co;
+            ShopAddressLabel.TextAlign = co;
+            LanguageLabel.TextAlign = co;
+            PrintPageLabel.TextAlign = co;
+            ShopQuoteLabel.TextAlign = co;
+            PrintNoteLabel.TextAlign = co;
+
+            //Settings Text Boxes
+            ShopNameTB.TextAlign = ha;
+            ShopAddressTB.TextAlign = ha;
+            ShopQuoteTB.TextAlign = ha;
+            NoteTB.TextAlign = ha;
+        }
+
+        private DataTable GetInvoiceNo()
+        {
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("select isnull(InvoiceNo,0) as 'InvoiceNo' from Invoices order by InvoiceNo asc", conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        InvoiceNoTB.Text = Convert.ToDecimal((reader["InvoiceNo"].ToString()) + 1).ToString();
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
+            }
+        }
+
+
+        private void GetSettings()
+        {
+            ShopNameTB.Text = Properties.Settings.Default.ShopName;
+            ShopAddressTB.Text = Properties.Settings.Default.ShopAddress;
+            LanguageCombo.Text = Properties.Settings.Default.Language;
+            PageCombo.Text = Properties.Settings.Default.PrintPage;
+            ShopQuoteTB.Text = Properties.Settings.Default.ShopQuote;
+            NoteTB.Text = Properties.Settings.Default.PrintNote;
+        }
+
         int lx = 8, ly = 9;
         int tx = 10, ty = 29;
         int i = 0;
@@ -108,15 +254,16 @@ namespace EasyTailor
         {
             if (IsValidates())
             {
-                if (AddFieldBtn.Text == "ADD")
-                {
-                    AddColumn();
-                    SaveRecord();
-                }
-                else
+                if (AddFieldBtn.Text == "UPDATE" || AddFieldBtn.Text == "اپڈیٹ")
                 {
                     RenameColumn();
                     UpdateRecord();
+                    
+                }
+                else
+                {
+                    AddColumn();
+                    SaveRecord();
                 }
                 ClearScreen();
                 FieldGridView.DataSource = GetAllFields();
@@ -166,7 +313,7 @@ namespace EasyTailor
         {
             if(FieldNameTB.Text.Trim() == "")
             {
-                MessageBox.Show("Field Name is Required....", "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(lan[37], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 FieldNameTB.Clear();
                 FieldNameTB.Focus();
                 return false;
@@ -177,7 +324,7 @@ namespace EasyTailor
         private void ClearScreen()
         {
             FieldNameTB.Clear();
-            AddFieldBtn.Text = "ADD";
+            AddFieldBtn.Text = lan[15];
             FieldNameTB.Focus();
         }
 
@@ -223,13 +370,40 @@ namespace EasyTailor
 
         private void dELETEToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("Are you sure you want to delete this field...","EASY",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+            if(MessageBox.Show(lan[38],"EASY",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
-                DeleteColumn();
-                DeleteRecord();
-                ClearScreen();
-                FieldGridView.DataSource = GetAllFields();
-                GetFieldsInPanel();
+                CheckFieldUsedOrNot();
+                if (fieldUsed != "")
+                {
+                    MessageBox.Show(lan[39], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    DeleteColumn();
+                    DeleteRecord();
+                    ClearScreen();
+                    FieldGridView.DataSource = GetAllFields();
+                    GetFieldsInPanel();
+                }
+            }
+        }
+        string fieldUsed = "";
+        private DataTable CheckFieldUsedOrNot()
+        {
+            fieldUsed = "";
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Select " + oldname + " from CustomerDetails where " + oldname + " != ''", conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        fieldUsed = reader[oldname].ToString();
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
             }
         }
 
@@ -237,7 +411,7 @@ namespace EasyTailor
         {
             if (FieldGridView.SelectedRows.Count > 0)
             {
-                AddFieldBtn.Text = "UPDATE";
+                AddFieldBtn.Text = lan[33];
                 DataGridViewRow item = FieldGridView.SelectedRows[0];
                 FieldIdTB.Text = item.Cells[0].Value.ToString();
                 oldname = item.Cells[1].Value.ToString();
@@ -247,25 +421,49 @@ namespace EasyTailor
 
         private void metroButton1_Click(object sender, EventArgs e)
         {
-            CheckCustomerDuplicate();
-            if (CustomerNameTB.Text == Name)
+            if (CustomerNameTB.Text != "")
             {
-                UpdateClothDetail();
+                CheckCustomerDuplicate();
+                if (CustomerNameTB.Text == Name)
+                {
+                    UpdateClothDetail();
+                }
+                else
+                {
+                    SaveCustomerRecord();
+                }
+                if (AddBtn.Text == "UPDATE" || AddBtn.Text == "اپڈیٹ")
+                {
+                    InvoiceUpdateRecord(invoiceid);
+                }
+                else
+                {
+                    if (DressQtyTB.Text == "" || DressQtyTB.Text == "0")
+                    {
+                        MessageBox.Show(lan[40], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        InvoiceSaveRecord();
+                    }
+                }
+                if (MessageBox.Show(lan[41], "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    if (PageCombo.Text == "A4")
+                    {
+                        TailorA4Print.Print();
+                    }
+                    else
+                    {
+                        Tailor8MMPrint.Print();
+                    }
+                }
+                ClearCustomerScreen();
             }
             else
             {
-                SaveCustomerRecord();
+                MessageBox.Show(lan[44], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            if(AddBtn.Text == "UPDATE")
-            {
-                InvoiceUpdateRecord(invoiceid);
-            }
-            else
-            {
-                InvoiceSaveRecord();
-            }
-            
-            ClearCustomerScreen();
         }
         private void InvoiceUpdateRecord(string id)
         {
@@ -279,10 +477,10 @@ namespace EasyTailor
                     cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
                     cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
                     cmd.Parameters.AddWithValue("@CustomerNo", CustomerNoTB.Text);
-                    cmd.Parameters.AddWithValue("@DressQty", DressQtyTB.Text);
-                    cmd.Parameters.AddWithValue("@TotalAmount", TotalAmountTB.Text);
-                    cmd.Parameters.AddWithValue("@Advance", AdvanceTB.Text);
-                    cmd.Parameters.AddWithValue("@Balance", BalanceTB.Text);
+                    cmd.Parameters.AddWithValue("@DressQty", DressDecimal);
+                    cmd.Parameters.AddWithValue("@TotalAmount", TotalDecimal);
+                    cmd.Parameters.AddWithValue("@Advance", AdvanceDecimal);
+                    cmd.Parameters.AddWithValue("@Balance", BalanceDecimal);
                     cmd.Parameters.AddWithValue("@Description", DescriptionTB.Text);
                     cmd.ExecuteNonQuery();
                 }
@@ -300,10 +498,10 @@ namespace EasyTailor
                     cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
                     cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
                     cmd.Parameters.AddWithValue("@CustomerNo", CustomerNoTB.Text);
-                    cmd.Parameters.AddWithValue("@DressQty", DressQtyTB.Text);
-                    cmd.Parameters.AddWithValue("@TotalAmount", TotalAmountTB.Text);
-                    cmd.Parameters.AddWithValue("@Advance", AdvanceTB.Text);
-                    cmd.Parameters.AddWithValue("@Balance", BalanceTB.Text);
+                    cmd.Parameters.AddWithValue("@DressQty", DressDecimal);
+                    cmd.Parameters.AddWithValue("@TotalAmount", TotalDecimal);
+                    cmd.Parameters.AddWithValue("@Advance", AdvanceDecimal);
+                    cmd.Parameters.AddWithValue("@Balance", BalanceDecimal);
                     cmd.Parameters.AddWithValue("@Description", DescriptionTB.Text);
                     cmd.ExecuteNonQuery();
                 }
@@ -382,8 +580,9 @@ namespace EasyTailor
             DescriptionTB.Clear();
             eu = "";
             ClothId = "";
-            AddBtn.Text = "ADD";
-            ListUpdateBtn.Hide(); 
+            AddBtn.Text = lan[15];
+            ListUpdateBtn.Hide();
+            GetInvoiceNo();
             GetFieldsInPanel();
             CustomerNameTB.Focus();
         }
@@ -421,36 +620,56 @@ namespace EasyTailor
                 Name.Text = row["CustomerName"].ToString();
                 Name.AutoSize = false;
                 Name.Size = new Size(234, 23);
+                if (LanguageCombo.Text != "ENGLISH")
+                {
+                    Name.TextAlign = ContentAlignment.MiddleRight;
+                }
                 p.Controls.Add(Name);
                 Name.Location = new Point(4, 18);
 
                 MetroFramework.Controls.MetroLabel NameLabel;
                 NameLabel = new MetroFramework.Controls.MetroLabel();
-                NameLabel.Text = "Name";
+                if (LanguageCombo.Text != "ENGLISH")
+                {
+                    NameLabel.AutoSize = false;
+                    NameLabel.Size = new Size(234, 23);
+                    NameLabel.TextAlign = ContentAlignment.MiddleRight;
+                }
+                NameLabel.Text = lan[34];
                 NameLabel.FontSize = MetroFramework.MetroLabelSize.Small;
                 p.Controls.Add(NameLabel);
-                NameLabel.Location = new Point(4, 4);
+                NameLabel.Location = new Point(4, 0);
 
                 MetroFramework.Controls.MetroLabel Number;
                 Number = new MetroFramework.Controls.MetroLabel();
                 Number.Text = row["CustomerNo"].ToString();
                 Number.AutoSize = false;
                 Number.Size = new Size(234, 23);
+                if (LanguageCombo.Text != "ENGLISH")
+                {
+                    Number.TextAlign = ContentAlignment.MiddleRight;
+                }
                 p.Controls.Add(Number);
                 Number.Location = new Point(4, 61);
 
                 MetroFramework.Controls.MetroLabel NumberLabel;
                 NumberLabel = new MetroFramework.Controls.MetroLabel();
-                NumberLabel.Text = "PhoneNo";
+                if (LanguageCombo.Text != "ENGLISH")
+                {
+                    NumberLabel.AutoSize = false;
+                    NumberLabel.Size = new Size(234, 23);
+                    NumberLabel.TextAlign = ContentAlignment.MiddleRight;
+                }
+                NumberLabel.Text = lan[35];
                 NumberLabel.FontSize = MetroFramework.MetroLabelSize.Small;
                 p.Controls.Add(NumberLabel);
-                NumberLabel.Location = new Point(4, 47);
+                NumberLabel.Location = new Point(4, 42);
 
                 MetroFramework.Controls.MetroButton Invoice;
                 Invoice = new MetroFramework.Controls.MetroButton();
                 Invoice.Name = row["CustomerName"].ToString();
                 Invoice.Click += Invoice_Button;
-                Invoice.Text = "SHOW INVOICES";
+                Invoice.Text = lan[36];
                 Invoice.Highlight = true;
                 Invoice.Size = new Size(120, 30);
                 p.Controls.Add(Invoice);
@@ -470,6 +689,7 @@ namespace EasyTailor
 
                 MetroFramework.Controls.MetroButton Delete;
                 Delete = new MetroFramework.Controls.MetroButton();
+                Delete.Tag = row["CustomerName"].ToString();
                 Delete.Name = row["ID"].ToString();
                 Delete.Click += Delete_Button;
                 Delete.BackgroundImage = Properties.Resources.delete;
@@ -530,18 +750,16 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroLabel DateLabel;
                 DateLabel = new MetroFramework.Controls.MetroLabel();
                 DateLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                DateLabel.Text = "Date";
+                DateLabel.Text = lan[4];
                 p.Controls.Add(DateLabel);
                 DateLabel.Location = new Point(3, 5);
 
                 MetroFramework.Controls.MetroLabel DDateLabel;
                 DDateLabel = new MetroFramework.Controls.MetroLabel();
                 DDateLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                DDateLabel.Text = "Delivery Date";
+                DDateLabel.Text = lan[5];
                 p.Controls.Add(DDateLabel);
                 DDateLabel.Location = new Point(127, 5);
-
-               
 
                 //Panel pl = new Panel();
                 //pl.Size = new Size(246, 1);
@@ -559,7 +777,7 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroLabel NameLabel;
                 NameLabel = new MetroFramework.Controls.MetroLabel();
                 NameLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                NameLabel.Text = "Name";
+                NameLabel.Text = lan[34];
                 p.Controls.Add(NameLabel);
                 NameLabel.Location = new Point(3, 42);
 
@@ -598,14 +816,14 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroLabel BalanceLabel;
                 BalanceLabel = new MetroFramework.Controls.MetroLabel();
                 BalanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                BalanceLabel.Text = "Balance";
+                BalanceLabel.Text = lan[12];
                 p.Controls.Add(BalanceLabel);
                 BalanceLabel.Location = new Point(197, 82);
 
                 MetroFramework.Controls.MetroLabel AdvanceLabel;
                 AdvanceLabel = new MetroFramework.Controls.MetroLabel();
                 AdvanceLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                AdvanceLabel.Text = "Advance";
+                AdvanceLabel.Text = lan[11];
                 p.Controls.Add(AdvanceLabel);
                 AdvanceLabel.Location = new Point(141, 82);
 
@@ -614,14 +832,14 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroLabel TotalLabel;
                 TotalLabel = new MetroFramework.Controls.MetroLabel();
                 TotalLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                TotalLabel.Text = "Total Amount";
+                TotalLabel.Text = lan[10];
                 p.Controls.Add(TotalLabel);
                 TotalLabel.Location = new Point(63, 82);
 
                 MetroFramework.Controls.MetroLabel QtyLabel;
                 QtyLabel = new MetroFramework.Controls.MetroLabel();
                 QtyLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                QtyLabel.Text = "Dress Qty";
+                QtyLabel.Text = lan[9];
                 p.Controls.Add(QtyLabel);
                 QtyLabel.Location = new Point(3, 82);
 
@@ -636,7 +854,7 @@ namespace EasyTailor
                 MetroFramework.Controls.MetroLabel DescriptionLabel;
                 DescriptionLabel = new MetroFramework.Controls.MetroLabel();
                 DescriptionLabel.FontSize = MetroFramework.MetroLabelSize.Small;
-                DescriptionLabel.Text = "Description";
+                DescriptionLabel.Text = lan[13];
                 p.Controls.Add(DescriptionLabel);
                 DescriptionLabel.Location = new Point(3, 118);
 
@@ -671,7 +889,7 @@ namespace EasyTailor
         private void Invoice_Delete_Button(object sender, EventArgs e)
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
-            if (MessageBox.Show("Are you sure you want to delete this field...", "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show(lan[38], "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
                 DeleteInvoiceRecord(btn.Name);
                 GetInvoices(btn.Tag.ToString());
@@ -696,7 +914,7 @@ namespace EasyTailor
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
             eu = "Update";
-            AddBtn.Text = "UPDATE";
+            AddBtn.Text = lan[33];
             ClothId = btn.Tag.ToString();
             GetClothDetail(btn.Tag.ToString());
             GetInvoiceDetail(btn.Name);
@@ -826,11 +1044,56 @@ namespace EasyTailor
         private void Delete_Button(object sender, EventArgs e)
         {
             MetroFramework.Controls.MetroButton btn = (MetroFramework.Controls.MetroButton)sender;
-            if (MessageBox.Show("Are you sure you want to delete this field...", "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            CheckInvoicesCreatedorNot(btn.Tag.ToString());
+            if (HaveInvoice != "")
             {
-                DeleteCustomerRecord(btn.Name);
-                FindCustomer();
-                GetCustomersinPanel();
+                if (MessageBox.Show(lan[42], "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    DeleteInvoicesRecord(btn.Tag.ToString());
+                    DeleteCustomerRecord(btn.Name);
+                    FindCustomer();
+                    GetCustomersinPanel();
+                }
+            }
+            else
+            {
+                if (MessageBox.Show(lan[38], "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    DeleteCustomerRecord(btn.Name);
+                    FindCustomer();
+                    GetCustomersinPanel();
+                }
+            }
+        }
+        private void DeleteInvoicesRecord(string CustomerName)
+        {
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Delete From Invoices where CustomerName = '" + CustomerName + "'", conn))
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        string HaveInvoice = "";
+        private DataTable CheckInvoicesCreatedorNot(string customer)
+        {
+            HaveInvoice = "";
+            DataTable dodb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Select CustomerName from Invoices Where CustomerName = '" + customer + "'", conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(); while (reader.Read())
+                    {
+                        HaveInvoice = reader["CustomerName"].ToString();
+                    }
+                    dodb.Load(reader);
+                }
+                return dodb;
             }
         }
 
@@ -987,8 +1250,7 @@ namespace EasyTailor
 
         private void metroButton3_Click(object sender, EventArgs e)
         {
-            TailorPrintPreview.Document = TailorPrint;
-            TailorPrintPreview.ShowDialog();
+            
         }
 
         private void TailorPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
@@ -1023,7 +1285,7 @@ namespace EasyTailor
             e.Graphics.DrawRectangle(blackPen, rect5);
 
             e.Graphics.DrawString("No.____________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 200));
-            e.Graphics.DrawString(SnoTB.Text, new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(275, 195));
+            e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(275, 195));
 
             e.Graphics.DrawString("Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(400, 200));
             e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(440, 195));
@@ -1049,16 +1311,23 @@ namespace EasyTailor
             {
                 File = Image.FromFile(f.FileName);
                 pictureBox1.Image = File;
-                pictureBox1.Image.Save(@"" + ShopNameTB.Text + ".jpg");
             }
         }
 
         private void metroButton1_Click_1(object sender, EventArgs e)
         {
-            Properties.Settings.Default.Premium = PackageCombo.Text;
+            Properties.Settings.Default.ShopName = ShopNameTB.Text;
+            Properties.Settings.Default.ShopAddress = ShopAddressTB.Text;
+            Properties.Settings.Default.Language = LanguageCombo.Text;
+            Properties.Settings.Default.PrintPage = PageCombo.Text;
+            Properties.Settings.Default.ShopQuote = ShopQuoteTB.Text;
+            Properties.Settings.Default.PrintNote = NoteTB.Text;
             Properties.Settings.Default.PX = this.Location.X;
             Properties.Settings.Default.PY = this.Location.Y;
+            pictureBox1.Image.Save(@"" + ShopNameTB.Text + ".jpg");
             Properties.Settings.Default.Save();
+
+            MessageBox.Show(lan[43], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void metroLabel18_Click(object sender, EventArgs e)
@@ -1074,6 +1343,170 @@ namespace EasyTailor
                 {
                     //Do something
                 }
+            }
+        }
+        string rl = "Left";
+        private void Tailor8MMPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            if (rl == "Right")
+            {
+                e.Graphics.DrawImage(pictureBox1.Image, 5, 0, 50, 50);
+
+                Rectangle rect1 = new Rectangle(0, 0, 285, 40);
+                Rectangle rect2 = new Rectangle(0, 42, 285, 25);
+                Rectangle rect3 = new Rectangle(0, 65, 285, 30);
+                Rectangle rect4 = new Rectangle(0, 100, 285, 20);
+                Rectangle rect5 = new Rectangle(2, 280, 279, 50);
+
+                //e.Graphics.FillRectangle(Brushes.DarkGreen, rect2);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+
+                e.Graphics.DrawString(ShopNameTB.Text, new Font("Arial Rounded MT", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+                e.Graphics.DrawString(ShopQuoteTB.Text, new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect2, stringFormat);
+
+                e.Graphics.DrawString(ShopAddressTB.Text, new Font("Jameel Noori Nastaleeq", 12, FontStyle.Bold), Brushes.Black, rect3, stringFormat);
+
+                e.Graphics.DrawString("Call : 0301-14499025", new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect4);
+
+                Pen blackPen4 = new Pen(Color.DarkGreen, 1);
+                PointF point4 = new PointF(0, 95);
+                PointF point5 = new PointF(285, 95);
+                e.Graphics.DrawLine(blackPen4, point4, point5);
+
+                PointF point1 = new PointF(0, 120);
+                PointF point2 = new PointF(285, 120);
+                e.Graphics.DrawLine(blackPen4, point1, point2);
+
+                Pen blackPen = new Pen(Color.DarkGreen, 1);
+                e.Graphics.DrawRectangle(blackPen, rect5);
+
+                e.Graphics.DrawString("Invoice No._________", new Font("Microsft Sans Sarif", 9, FontStyle.Regular), Brushes.Black, new Point(0, 130));
+                e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(90, 128));
+
+                e.Graphics.DrawString("Date: _____________", new Font("Microsft Sans Sarif", 9, FontStyle.Regular), Brushes.Black, new Point(150, 130));
+                e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(196, 128));
+
+                e.Graphics.DrawString("D.Date: ___________", new Font("Microsft Sans Sarif", 9, FontStyle.Regular), Brushes.Black, new Point(150, 150));
+                e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(196, 148));
+
+                e.Graphics.DrawString("Name: _______________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 180));
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(50, 178));
+
+                e.Graphics.DrawString("Dress Qty: ______", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 210));
+                e.Graphics.DrawString(DressQtyTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(70, 208));
+
+                e.Graphics.DrawString("Total Amount: _________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(120, 210));
+                e.Graphics.DrawString(TotalAmountTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(210, 208));
+
+                e.Graphics.DrawString("Advance: ________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 240));
+                e.Graphics.DrawString(AdvanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(60, 238));
+
+                e.Graphics.DrawString("Balance: _________", new Font("Microsft Sans Sarif", 10, FontStyle.Bold), Brushes.Black, new Point(137, 240));
+                e.Graphics.DrawString(BalanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Bold), Brushes.Black, new Point(203, 238));
+
+                e.Graphics.DrawString("Note:", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 260));
+                e.Graphics.DrawString(NoteTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, rect5);
+
+                e.Graphics.DrawString("Software Developed By www.Easysoft.pk", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(15, 330));
+                e.Graphics.DrawString("Call : 0301-1499025 | 0318-0137714", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(28, 345));
+            }
+
+            if (rl == "Left")
+            {
+                e.Graphics.DrawImage(pictureBox1.Image, 5, 0, 50, 50);
+
+                Rectangle rect1 = new Rectangle(0, 0, 285, 40);
+                Rectangle rect2 = new Rectangle(0, 42, 285, 25);
+                Rectangle rect3 = new Rectangle(0, 65, 285, 30);
+                Rectangle rect4 = new Rectangle(0, 100, 285, 20);
+                Rectangle rect5 = new Rectangle(2, 280, 279, 50);
+
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+
+                e.Graphics.DrawString(ShopNameTB.Text, new Font("Arial Rounded MT", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+                e.Graphics.DrawString(ShopQuoteTB.Text, new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect2, stringFormat);
+
+                e.Graphics.DrawString(ShopAddressTB.Text, new Font("Jameel Noori Nastaleeq", 12, FontStyle.Bold), Brushes.Black, rect3, stringFormat);
+               
+                e.Graphics.DrawString("Call : 0301-14499025", new Font("Arial Rounded MT", 10, FontStyle.Regular), Brushes.Black, rect4);
+
+                Pen blackPen4 = new Pen(Color.DarkGreen, 1);
+                PointF point4 = new PointF(0, 95);
+                PointF point5 = new PointF(285, 95);
+                e.Graphics.DrawLine(blackPen4, point4, point5);
+
+                PointF point1 = new PointF(0, 120);
+                PointF point2 = new PointF(285, 120);
+                e.Graphics.DrawLine(blackPen4, point1, point2);
+
+                Pen blackPen = new Pen(Color.DarkGreen, 1);
+                e.Graphics.DrawRectangle(blackPen, rect5);
+
+                StringFormat format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+                e.Graphics.DrawString("بل نمبر ---------", new Font("Jameel Noori Nastaleeq", 9, FontStyle.Regular), Brushes.Black, new Point(260, 130), format);
+                e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(225, 126), format);
+
+                e.Graphics.DrawString("تاریخ -----------------", new Font("Jameel Noori Nastaleeq", 9, FontStyle.Regular), Brushes.Black, new Point(130, 130), format);
+                e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(20, 126));
+
+                e.Graphics.DrawString("ادئیگی کی تاریخ -----------------", new Font("Jameel Noori Nastaleeq", 9, FontStyle.Regular), Brushes.Black, new Point(155, 150), format);
+                e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(20, 146));
+
+                e.Graphics.DrawString("نام -------------------------------------------------", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(280, 180), format);
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(260, 176), format);
+
+                e.Graphics.DrawString("لباس کی تعداد ---------", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(260, 210), format);
+                e.Graphics.DrawString(DressQtyTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(210, 208), format);
+
+                e.Graphics.DrawString("کل رقم ------------", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(120, 210), format);
+                e.Graphics.DrawString(TotalAmountTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(90, 208), format);
+
+                e.Graphics.DrawString("پیشگی ------------", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(260, 240), format);
+                e.Graphics.DrawString(AdvanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 238), format);
+
+                e.Graphics.DrawString("بقایہ رقم ------------", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(120, 240), format);
+                e.Graphics.DrawString(BalanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(90, 238), format);
+
+                e.Graphics.DrawString("نوٹ:", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(280, 260), format);
+                e.Graphics.DrawString(NoteTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, rect5, format);
+
+                e.Graphics.DrawString("Software Developed By www.Easysoft.pk", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(15, 330));
+                e.Graphics.DrawString("Call : 0301-1499025 | 0318-0137714", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(28, 345));
+            }
+        }
+
+        private void panel1_Paint_2(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void LanguageCombo_SelectedValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Language = LanguageCombo.Text;
+            Properties.Settings.Default.PX = this.Location.X;
+            Properties.Settings.Default.PY = this.Location.Y;
+            Properties.Settings.Default.Save();
+
+            this.Hide();
+            MainForm mf = new MainForm();
+            mf.ShowDialog();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.F2)
+            {
+                TailorPrintPreview.Document = Tailor8MMPrint;
+                TailorPrintPreview.ShowDialog();
             }
         }
 
@@ -1100,7 +1533,7 @@ namespace EasyTailor
         private void FieldResetBtn_Click(object sender, EventArgs e)
         {
             FieldNameTB.Clear();
-            AddFieldBtn.Text = "ADD";
+            AddFieldBtn.Text = lan[15];
             SearchFieldTB.Clear();
             FieldNameTB.Focus();
         }

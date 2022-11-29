@@ -54,20 +54,6 @@ C:\Users\Administrator.DESKTOP-966OP3S\Downloads\New\New\EasyTailor\EasyTailor\o
 C:\Users\Administrator.DESKTOP-966OP3S\Downloads\New\New\EasyTailor\EasyTailor\obj\Debug\EasyTailor.csproj.CopyComplete
 C:\Users\Administrator.DESKTOP-966OP3S\Downloads\New\New\EasyTailor\EasyTailor\obj\Debug\EasyTailor.exe
 C:\Users\Administrator.DESKTOP-966OP3S\Downloads\New\New\EasyTailor\EasyTailor\obj\Debug\EasyTailor.pdb
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe.config
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.pdb
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.Design.dll
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.dll
-D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.Fonts.dll
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.AssemblyReference.cache
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.MainForm.resources
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.Properties.Resources.resources
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.GenerateResource.cache
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.CoreCompileInputs.cache
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.CopyComplete
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.exe
-D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.pdb
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe.config
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.pdb
@@ -82,3 +68,18 @@ C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\obj\Debug\E
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.CopyComplete
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.exe
 C:\Users\Easy Soft\OneDrive\Desktop\NewRep\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.pdb
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe.config
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.exe
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\EasyTailor.pdb
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.Design.dll
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.dll
+D:\EasyTailor\TailorSoftware\EasyTailor\bin\Debug\MetroFramework.Fonts.dll
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.MainForm.resources
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.Properties.Resources.resources
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.SplashScreen.resources
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.GenerateResource.cache
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.CoreCompileInputs.cache
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.CopyComplete
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.exe
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.pdb
+D:\EasyTailor\TailorSoftware\EasyTailor\obj\Debug\EasyTailor.csproj.AssemblyReference.cache
