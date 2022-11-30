@@ -118,5 +118,29 @@ namespace EasyTailor.Properties {
                 this["PrintNote"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PhoneNo {
+            get {
+                return ((string)(this["PhoneNo"]));
+            }
+            set {
+                this["PhoneNo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PrintLanguage {
+            get {
+                return ((string)(this["PrintLanguage"]));
+            }
+            set {
+                this["PrintLanguage"] = value;
+            }
+        }
     }
 }

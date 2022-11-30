@@ -34,7 +34,6 @@ namespace EasyTailor
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
-            this.HomeTab = new MetroFramework.Controls.MetroTabPage();
             this.NewTab = new MetroFramework.Controls.MetroTabPage();
             this.ListUpdateBtn = new MetroFramework.Controls.MetroButton();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -89,9 +88,11 @@ namespace EasyTailor
             this.FieldNameLabel = new MetroFramework.Controls.MetroLabel();
             this.FieldIdTB = new MetroFramework.Controls.MetroTextBox();
             this.FieldNameTB = new MetroFramework.Controls.MetroTextBox();
+            this.HomeTab = new MetroFramework.Controls.MetroTabPage();
             this.SettingTab = new MetroFramework.Controls.MetroTabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.PageCombo = new MetroFramework.Controls.MetroComboBox();
+            this.PrintLanguageCombo = new MetroFramework.Controls.MetroComboBox();
             this.LanguageCombo = new MetroFramework.Controls.MetroComboBox();
             this.metroButton1 = new MetroFramework.Controls.MetroButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -100,18 +101,26 @@ namespace EasyTailor
             this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel16 = new MetroFramework.Controls.MetroLabel();
+            this.PrintLanguageLabel = new MetroFramework.Controls.MetroLabel();
             this.PrintPageLabel = new MetroFramework.Controls.MetroLabel();
             this.LanguageLabel = new MetroFramework.Controls.MetroLabel();
             this.ShopAddressLabel = new MetroFramework.Controls.MetroLabel();
+            this.PhoneNoLabel = new MetroFramework.Controls.MetroLabel();
             this.ShopNameLabel = new MetroFramework.Controls.MetroLabel();
             this.NoteTB = new MetroFramework.Controls.MetroTextBox();
             this.ShopQuoteTB = new MetroFramework.Controls.MetroTextBox();
             this.ShopAddressTB = new MetroFramework.Controls.MetroTextBox();
+            this.PhoneNoTB = new MetroFramework.Controls.MetroTextBox();
             this.ShopNameTB = new MetroFramework.Controls.MetroTextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.TailorA4Print = new System.Drawing.Printing.PrintDocument();
             this.TailorPrintPreview = new System.Windows.Forms.PrintPreviewDialog();
             this.Tailor8MMPrint = new System.Drawing.Printing.PrintDocument();
+            this.Tailor8MMClothPrint = new System.Drawing.Printing.PrintDocument();
+            this.FieldUrduNameTB = new MetroFramework.Controls.MetroTextBox();
+            this.FieldUrduNameLabel = new MetroFramework.Controls.MetroLabel();
+            this.FieldSindhiNameTB = new MetroFramework.Controls.MetroTextBox();
+            this.FieldSindhiNameLabel = new MetroFramework.Controls.MetroLabel();
             this.metroTabControl1.SuspendLayout();
             this.NewTab.SuspendLayout();
             this.FindTab.SuspendLayout();
@@ -126,35 +135,20 @@ namespace EasyTailor
             // 
             // metroTabControl1
             // 
+            this.metroTabControl1.Controls.Add(this.HomeTab);
             this.metroTabControl1.Controls.Add(this.NewTab);
             this.metroTabControl1.Controls.Add(this.FindTab);
             this.metroTabControl1.Controls.Add(this.AddCloth);
-            this.metroTabControl1.Controls.Add(this.HomeTab);
             this.metroTabControl1.Controls.Add(this.SettingTab);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.RightToLeftLayout = true;
-            this.metroTabControl1.SelectedIndex = 2;
+            this.metroTabControl1.SelectedIndex = 1;
             this.metroTabControl1.Size = new System.Drawing.Size(1350, 615);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             this.metroTabControl1.Click += new System.EventHandler(this.metroTabControl1_Click);
-            // 
-            // HomeTab
-            // 
-            this.HomeTab.HorizontalScrollbarBarColor = true;
-            this.HomeTab.HorizontalScrollbarHighlightOnWheel = false;
-            this.HomeTab.HorizontalScrollbarSize = 10;
-            this.HomeTab.Location = new System.Drawing.Point(4, 35);
-            this.HomeTab.Name = "HomeTab";
-            this.HomeTab.Size = new System.Drawing.Size(1342, 576);
-            this.HomeTab.TabIndex = 0;
-            this.HomeTab.Text = "Home";
-            this.HomeTab.VerticalScrollbarBarColor = true;
-            this.HomeTab.VerticalScrollbarHighlightOnWheel = false;
-            this.HomeTab.VerticalScrollbarSize = 10;
-            this.HomeTab.Click += new System.EventHandler(this.HomeTab_Click);
             // 
             // NewTab
             // 
@@ -207,12 +201,11 @@ namespace EasyTailor
             // 
             // ListUpdateBtn
             // 
-            this.ListUpdateBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ListUpdateBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ListUpdateBtn.Highlight = true;
-            this.ListUpdateBtn.Location = new System.Drawing.Point(249, 515);
+            this.ListUpdateBtn.Location = new System.Drawing.Point(867, 222);
             this.ListUpdateBtn.Name = "ListUpdateBtn";
-            this.ListUpdateBtn.Size = new System.Drawing.Size(65, 23);
+            this.ListUpdateBtn.Size = new System.Drawing.Size(116, 30);
             this.ListUpdateBtn.TabIndex = 3;
             this.ListUpdateBtn.Text = "UPDATE";
             this.ListUpdateBtn.UseSelectable = true;
@@ -225,7 +218,7 @@ namespace EasyTailor
             this.panel7.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.panel7.Location = new System.Drawing.Point(322, 32);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(7, 531);
+            this.panel7.Size = new System.Drawing.Size(7, 522);
             this.panel7.TabIndex = 57;
             // 
             // CustomerNoLabel
@@ -349,7 +342,7 @@ namespace EasyTailor
             this.FieldPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FieldPanel.Location = new System.Drawing.Point(19, 151);
             this.FieldPanel.Name = "FieldPanel";
-            this.FieldPanel.Size = new System.Drawing.Size(297, 389);
+            this.FieldPanel.Size = new System.Drawing.Size(297, 403);
             this.FieldPanel.TabIndex = 2;
             // 
             // NewInvoiceLabel
@@ -634,7 +627,7 @@ namespace EasyTailor
             this.InvoiceNoTB.Enabled = false;
             this.InvoiceNoTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.InvoiceNoTB.Lines = new string[] {
-        "16565"};
+        "0"};
             this.InvoiceNoTB.Location = new System.Drawing.Point(823, 63);
             this.InvoiceNoTB.MaxLength = 32767;
             this.InvoiceNoTB.Name = "InvoiceNoTB";
@@ -646,7 +639,7 @@ namespace EasyTailor
             this.InvoiceNoTB.ShortcutsEnabled = true;
             this.InvoiceNoTB.Size = new System.Drawing.Size(160, 30);
             this.InvoiceNoTB.TabIndex = 1;
-            this.InvoiceNoTB.Text = "16565";
+            this.InvoiceNoTB.Text = "0";
             this.InvoiceNoTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.InvoiceNoTB.UseSelectable = true;
             this.InvoiceNoTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
@@ -778,7 +771,7 @@ namespace EasyTailor
             this.CustomersPanel.BackColor = System.Drawing.Color.White;
             this.CustomersPanel.Location = new System.Drawing.Point(20, 102);
             this.CustomersPanel.Name = "CustomersPanel";
-            this.CustomersPanel.Size = new System.Drawing.Size(1302, 420);
+            this.CustomersPanel.Size = new System.Drawing.Size(1302, 414);
             this.CustomersPanel.TabIndex = 0;
             // 
             // FindSearchBtn
@@ -858,8 +851,12 @@ namespace EasyTailor
             this.AddCloth.Controls.Add(this.AddFieldBtn);
             this.AddCloth.Controls.Add(this.SearchFieldLabel);
             this.AddCloth.Controls.Add(this.SearchFieldTB);
+            this.AddCloth.Controls.Add(this.FieldSindhiNameLabel);
+            this.AddCloth.Controls.Add(this.FieldUrduNameLabel);
             this.AddCloth.Controls.Add(this.FieldNameLabel);
             this.AddCloth.Controls.Add(this.FieldIdTB);
+            this.AddCloth.Controls.Add(this.FieldSindhiNameTB);
+            this.AddCloth.Controls.Add(this.FieldUrduNameTB);
             this.AddCloth.Controls.Add(this.FieldNameTB);
             this.AddCloth.HorizontalScrollbarBarColor = true;
             this.AddCloth.HorizontalScrollbarHighlightOnWheel = false;
@@ -891,7 +888,7 @@ namespace EasyTailor
             this.FieldGridView.ColumnHeadersHeight = 30;
             this.FieldGridView.ContextMenuStrip = this.FieldContext;
             this.FieldGridView.GridColor = System.Drawing.Color.White;
-            this.FieldGridView.Location = new System.Drawing.Point(3, 169);
+            this.FieldGridView.Location = new System.Drawing.Point(3, 236);
             this.FieldGridView.MultiSelect = false;
             this.FieldGridView.Name = "FieldGridView";
             this.FieldGridView.ReadOnly = true;
@@ -906,8 +903,8 @@ namespace EasyTailor
             this.FieldGridView.RowHeadersWidth = 51;
             this.FieldGridView.RowTemplate.Height = 30;
             this.FieldGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.FieldGridView.Size = new System.Drawing.Size(560, 372);
-            this.FieldGridView.TabIndex = 5;
+            this.FieldGridView.Size = new System.Drawing.Size(600, 334);
+            this.FieldGridView.TabIndex = 7;
             this.FieldGridView.Click += new System.EventHandler(this.FieldGridView_Click);
             // 
             // FieldContext
@@ -928,10 +925,10 @@ namespace EasyTailor
             // 
             this.SearchBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.SearchBtn.Highlight = true;
-            this.SearchBtn.Location = new System.Drawing.Point(306, 129);
+            this.SearchBtn.Location = new System.Drawing.Point(475, 190);
             this.SearchBtn.Name = "SearchBtn";
             this.SearchBtn.Size = new System.Drawing.Size(128, 30);
-            this.SearchBtn.TabIndex = 4;
+            this.SearchBtn.TabIndex = 5;
             this.SearchBtn.Text = "SEARCH";
             this.SearchBtn.UseSelectable = true;
             this.SearchBtn.Click += new System.EventHandler(this.SearchBtn_Click);
@@ -940,10 +937,10 @@ namespace EasyTailor
             // 
             this.FieldResetBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.FieldResetBtn.Highlight = true;
-            this.FieldResetBtn.Location = new System.Drawing.Point(306, 89);
+            this.FieldResetBtn.Location = new System.Drawing.Point(475, 150);
             this.FieldResetBtn.Name = "FieldResetBtn";
             this.FieldResetBtn.Size = new System.Drawing.Size(128, 30);
-            this.FieldResetBtn.TabIndex = 2;
+            this.FieldResetBtn.TabIndex = 6;
             this.FieldResetBtn.Text = "RESET";
             this.FieldResetBtn.UseSelectable = true;
             this.FieldResetBtn.Click += new System.EventHandler(this.FieldResetBtn_Click);
@@ -952,17 +949,17 @@ namespace EasyTailor
             // 
             this.AddFieldBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.AddFieldBtn.Highlight = true;
-            this.AddFieldBtn.Location = new System.Drawing.Point(306, 50);
+            this.AddFieldBtn.Location = new System.Drawing.Point(475, 107);
             this.AddFieldBtn.Name = "AddFieldBtn";
             this.AddFieldBtn.Size = new System.Drawing.Size(128, 30);
-            this.AddFieldBtn.TabIndex = 1;
+            this.AddFieldBtn.TabIndex = 3;
             this.AddFieldBtn.Text = "ADD";
             this.AddFieldBtn.UseSelectable = true;
             this.AddFieldBtn.Click += new System.EventHandler(this.AddFieldBtn_Click);
             // 
             // SearchFieldLabel
             // 
-            this.SearchFieldLabel.Location = new System.Drawing.Point(-1, 109);
+            this.SearchFieldLabel.Location = new System.Drawing.Point(-1, 170);
             this.SearchFieldLabel.Name = "SearchFieldLabel";
             this.SearchFieldLabel.Size = new System.Drawing.Size(301, 19);
             this.SearchFieldLabel.TabIndex = 45;
@@ -983,7 +980,7 @@ namespace EasyTailor
             this.SearchFieldTB.CustomButton.UseSelectable = true;
             this.SearchFieldTB.CustomButton.Visible = false;
             this.SearchFieldTB.Lines = new string[0];
-            this.SearchFieldTB.Location = new System.Drawing.Point(3, 129);
+            this.SearchFieldTB.Location = new System.Drawing.Point(3, 190);
             this.SearchFieldTB.MaxLength = 32767;
             this.SearchFieldTB.Name = "SearchFieldTB";
             this.SearchFieldTB.PasswordChar = '\0';
@@ -993,7 +990,7 @@ namespace EasyTailor
             this.SearchFieldTB.SelectionStart = 0;
             this.SearchFieldTB.ShortcutsEnabled = true;
             this.SearchFieldTB.Size = new System.Drawing.Size(297, 30);
-            this.SearchFieldTB.TabIndex = 3;
+            this.SearchFieldTB.TabIndex = 4;
             this.SearchFieldTB.UseSelectable = true;
             this.SearchFieldTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.SearchFieldTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
@@ -1051,6 +1048,7 @@ namespace EasyTailor
             this.FieldNameTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
             this.FieldNameTB.CustomButton.UseSelectable = true;
             this.FieldNameTB.CustomButton.Visible = false;
+            this.FieldNameTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.FieldNameTB.Lines = new string[0];
             this.FieldNameTB.Location = new System.Drawing.Point(3, 50);
             this.FieldNameTB.MaxLength = 32767;
@@ -1066,6 +1064,21 @@ namespace EasyTailor
             this.FieldNameTB.UseSelectable = true;
             this.FieldNameTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.FieldNameTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // HomeTab
+            // 
+            this.HomeTab.HorizontalScrollbarBarColor = true;
+            this.HomeTab.HorizontalScrollbarHighlightOnWheel = false;
+            this.HomeTab.HorizontalScrollbarSize = 10;
+            this.HomeTab.Location = new System.Drawing.Point(4, 38);
+            this.HomeTab.Name = "HomeTab";
+            this.HomeTab.Size = new System.Drawing.Size(1342, 573);
+            this.HomeTab.TabIndex = 0;
+            this.HomeTab.Text = "Home";
+            this.HomeTab.VerticalScrollbarBarColor = true;
+            this.HomeTab.VerticalScrollbarHighlightOnWheel = false;
+            this.HomeTab.VerticalScrollbarSize = 10;
+            this.HomeTab.Click += new System.EventHandler(this.HomeTab_Click);
             // 
             // SettingTab
             // 
@@ -1086,6 +1099,7 @@ namespace EasyTailor
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.PageCombo);
+            this.panel1.Controls.Add(this.PrintLanguageCombo);
             this.panel1.Controls.Add(this.LanguageCombo);
             this.panel1.Controls.Add(this.metroButton1);
             this.panel1.Controls.Add(this.pictureBox1);
@@ -1094,17 +1108,20 @@ namespace EasyTailor
             this.panel1.Controls.Add(this.metroLabel18);
             this.panel1.Controls.Add(this.metroLabel17);
             this.panel1.Controls.Add(this.metroLabel16);
+            this.panel1.Controls.Add(this.PrintLanguageLabel);
             this.panel1.Controls.Add(this.PrintPageLabel);
             this.panel1.Controls.Add(this.LanguageLabel);
             this.panel1.Controls.Add(this.ShopAddressLabel);
+            this.panel1.Controls.Add(this.PhoneNoLabel);
             this.panel1.Controls.Add(this.ShopNameLabel);
             this.panel1.Controls.Add(this.NoteTB);
             this.panel1.Controls.Add(this.ShopQuoteTB);
             this.panel1.Controls.Add(this.ShopAddressTB);
+            this.panel1.Controls.Add(this.PhoneNoTB);
             this.panel1.Controls.Add(this.ShopNameTB);
             this.panel1.Location = new System.Drawing.Point(3, 29);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(798, 407);
+            this.panel1.Size = new System.Drawing.Size(798, 494);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_2);
             // 
@@ -1115,11 +1132,25 @@ namespace EasyTailor
             this.PageCombo.Items.AddRange(new object[] {
             "A4",
             "8MM"});
-            this.PageCombo.Location = new System.Drawing.Point(15, 193);
+            this.PageCombo.Location = new System.Drawing.Point(15, 313);
             this.PageCombo.Name = "PageCombo";
             this.PageCombo.Size = new System.Drawing.Size(297, 29);
             this.PageCombo.TabIndex = 3;
             this.PageCombo.UseSelectable = true;
+            // 
+            // PrintLanguageCombo
+            // 
+            this.PrintLanguageCombo.FormattingEnabled = true;
+            this.PrintLanguageCombo.ItemHeight = 23;
+            this.PrintLanguageCombo.Items.AddRange(new object[] {
+            "ENGLISH",
+            "URDU",
+            "SINDHI"});
+            this.PrintLanguageCombo.Location = new System.Drawing.Point(15, 193);
+            this.PrintLanguageCombo.Name = "PrintLanguageCombo";
+            this.PrintLanguageCombo.Size = new System.Drawing.Size(297, 29);
+            this.PrintLanguageCombo.TabIndex = 2;
+            this.PrintLanguageCombo.UseSelectable = true;
             // 
             // LanguageCombo
             // 
@@ -1129,7 +1160,7 @@ namespace EasyTailor
             "ENGLISH",
             "URDU",
             "SINDHI"});
-            this.LanguageCombo.Location = new System.Drawing.Point(15, 132);
+            this.LanguageCombo.Location = new System.Drawing.Point(15, 252);
             this.LanguageCombo.Name = "LanguageCombo";
             this.LanguageCombo.Size = new System.Drawing.Size(297, 29);
             this.LanguageCombo.TabIndex = 2;
@@ -1140,7 +1171,7 @@ namespace EasyTailor
             // 
             this.metroButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.metroButton1.Highlight = true;
-            this.metroButton1.Location = new System.Drawing.Point(483, 363);
+            this.metroButton1.Location = new System.Drawing.Point(483, 435);
             this.metroButton1.Name = "metroButton1";
             this.metroButton1.Size = new System.Drawing.Size(116, 30);
             this.metroButton1.TabIndex = 6;
@@ -1152,7 +1183,7 @@ namespace EasyTailor
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBox1.Location = new System.Drawing.Point(381, 193);
+            this.pictureBox1.Location = new System.Drawing.Point(381, 265);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(218, 152);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1161,7 +1192,7 @@ namespace EasyTailor
             // 
             // PrintNoteLabel
             // 
-            this.PrintNoteLabel.Location = new System.Drawing.Point(12, 295);
+            this.PrintNoteLabel.Location = new System.Drawing.Point(12, 415);
             this.PrintNoteLabel.Name = "PrintNoteLabel";
             this.PrintNoteLabel.Size = new System.Drawing.Size(300, 19);
             this.PrintNoteLabel.TabIndex = 45;
@@ -1169,7 +1200,7 @@ namespace EasyTailor
             // 
             // ShopQuoteLabel
             // 
-            this.ShopQuoteLabel.Location = new System.Drawing.Point(12, 232);
+            this.ShopQuoteLabel.Location = new System.Drawing.Point(12, 352);
             this.ShopQuoteLabel.Name = "ShopQuoteLabel";
             this.ShopQuoteLabel.Size = new System.Drawing.Size(300, 19);
             this.ShopQuoteLabel.TabIndex = 45;
@@ -1179,7 +1210,7 @@ namespace EasyTailor
             // 
             this.metroLabel18.AutoSize = true;
             this.metroLabel18.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.metroLabel18.Location = new System.Drawing.Point(470, 171);
+            this.metroLabel18.Location = new System.Drawing.Point(470, 243);
             this.metroLabel18.Name = "metroLabel18";
             this.metroLabel18.Size = new System.Drawing.Size(40, 19);
             this.metroLabel18.TabIndex = 45;
@@ -1190,7 +1221,7 @@ namespace EasyTailor
             // 
             this.metroLabel17.AutoSize = true;
             this.metroLabel17.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.metroLabel17.Location = new System.Drawing.Point(548, 171);
+            this.metroLabel17.Location = new System.Drawing.Point(548, 243);
             this.metroLabel17.Name = "metroLabel17";
             this.metroLabel17.Size = new System.Drawing.Size(51, 19);
             this.metroLabel17.TabIndex = 45;
@@ -1200,15 +1231,23 @@ namespace EasyTailor
             // metroLabel16
             // 
             this.metroLabel16.AutoSize = true;
-            this.metroLabel16.Location = new System.Drawing.Point(377, 171);
+            this.metroLabel16.Location = new System.Drawing.Point(377, 243);
             this.metroLabel16.Name = "metroLabel16";
             this.metroLabel16.Size = new System.Drawing.Size(39, 19);
             this.metroLabel16.TabIndex = 45;
             this.metroLabel16.Text = "Logo";
             // 
+            // PrintLanguageLabel
+            // 
+            this.PrintLanguageLabel.Location = new System.Drawing.Point(12, 173);
+            this.PrintLanguageLabel.Name = "PrintLanguageLabel";
+            this.PrintLanguageLabel.Size = new System.Drawing.Size(300, 19);
+            this.PrintLanguageLabel.TabIndex = 45;
+            this.PrintLanguageLabel.Text = "Print Language";
+            // 
             // PrintPageLabel
             // 
-            this.PrintPageLabel.Location = new System.Drawing.Point(12, 173);
+            this.PrintPageLabel.Location = new System.Drawing.Point(12, 293);
             this.PrintPageLabel.Name = "PrintPageLabel";
             this.PrintPageLabel.Size = new System.Drawing.Size(300, 19);
             this.PrintPageLabel.TabIndex = 45;
@@ -1216,7 +1255,7 @@ namespace EasyTailor
             // 
             // LanguageLabel
             // 
-            this.LanguageLabel.Location = new System.Drawing.Point(12, 112);
+            this.LanguageLabel.Location = new System.Drawing.Point(12, 232);
             this.LanguageLabel.Name = "LanguageLabel";
             this.LanguageLabel.Size = new System.Drawing.Size(300, 19);
             this.LanguageLabel.TabIndex = 45;
@@ -1229,6 +1268,14 @@ namespace EasyTailor
             this.ShopAddressLabel.Size = new System.Drawing.Size(587, 19);
             this.ShopAddressLabel.TabIndex = 45;
             this.ShopAddressLabel.Text = "Shop Address";
+            // 
+            // PhoneNoLabel
+            // 
+            this.PhoneNoLabel.Location = new System.Drawing.Point(12, 114);
+            this.PhoneNoLabel.Name = "PhoneNoLabel";
+            this.PhoneNoLabel.Size = new System.Drawing.Size(300, 19);
+            this.PhoneNoLabel.TabIndex = 45;
+            this.PhoneNoLabel.Text = "PhoneNo";
             // 
             // ShopNameLabel
             // 
@@ -1254,7 +1301,7 @@ namespace EasyTailor
             this.NoteTB.CustomButton.Visible = false;
             this.NoteTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.NoteTB.Lines = new string[0];
-            this.NoteTB.Location = new System.Drawing.Point(15, 315);
+            this.NoteTB.Location = new System.Drawing.Point(15, 435);
             this.NoteTB.MaxLength = 32767;
             this.NoteTB.Name = "NoteTB";
             this.NoteTB.PasswordChar = '\0';
@@ -1285,7 +1332,7 @@ namespace EasyTailor
             this.ShopQuoteTB.CustomButton.Visible = false;
             this.ShopQuoteTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
             this.ShopQuoteTB.Lines = new string[0];
-            this.ShopQuoteTB.Location = new System.Drawing.Point(15, 252);
+            this.ShopQuoteTB.Location = new System.Drawing.Point(15, 372);
             this.ShopQuoteTB.MaxLength = 32767;
             this.ShopQuoteTB.Name = "ShopQuoteTB";
             this.ShopQuoteTB.PasswordChar = '\0';
@@ -1330,6 +1377,37 @@ namespace EasyTailor
             this.ShopAddressTB.UseSelectable = true;
             this.ShopAddressTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.ShopAddressTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // PhoneNoTB
+            // 
+            // 
+            // 
+            // 
+            this.PhoneNoTB.CustomButton.Image = null;
+            this.PhoneNoTB.CustomButton.Location = new System.Drawing.Point(269, 2);
+            this.PhoneNoTB.CustomButton.Name = "";
+            this.PhoneNoTB.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.PhoneNoTB.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.PhoneNoTB.CustomButton.TabIndex = 1;
+            this.PhoneNoTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.PhoneNoTB.CustomButton.UseSelectable = true;
+            this.PhoneNoTB.CustomButton.Visible = false;
+            this.PhoneNoTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.PhoneNoTB.Lines = new string[0];
+            this.PhoneNoTB.Location = new System.Drawing.Point(15, 134);
+            this.PhoneNoTB.MaxLength = 32767;
+            this.PhoneNoTB.Name = "PhoneNoTB";
+            this.PhoneNoTB.PasswordChar = '\0';
+            this.PhoneNoTB.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.PhoneNoTB.SelectedText = "";
+            this.PhoneNoTB.SelectionLength = 0;
+            this.PhoneNoTB.SelectionStart = 0;
+            this.PhoneNoTB.ShortcutsEnabled = true;
+            this.PhoneNoTB.Size = new System.Drawing.Size(297, 30);
+            this.PhoneNoTB.TabIndex = 0;
+            this.PhoneNoTB.UseSelectable = true;
+            this.PhoneNoTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.PhoneNoTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // ShopNameTB
             // 
@@ -1383,6 +1461,90 @@ namespace EasyTailor
             // Tailor8MMPrint
             // 
             this.Tailor8MMPrint.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Tailor8MMPrint_PrintPage);
+            // 
+            // Tailor8MMClothPrint
+            // 
+            this.Tailor8MMClothPrint.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.Tailor8MMClothPrint_PrintPage);
+            // 
+            // FieldUrduNameTB
+            // 
+            // 
+            // 
+            // 
+            this.FieldUrduNameTB.CustomButton.Image = null;
+            this.FieldUrduNameTB.CustomButton.Location = new System.Drawing.Point(269, 2);
+            this.FieldUrduNameTB.CustomButton.Name = "";
+            this.FieldUrduNameTB.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.FieldUrduNameTB.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.FieldUrduNameTB.CustomButton.TabIndex = 1;
+            this.FieldUrduNameTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.FieldUrduNameTB.CustomButton.UseSelectable = true;
+            this.FieldUrduNameTB.CustomButton.Visible = false;
+            this.FieldUrduNameTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.FieldUrduNameTB.Lines = new string[0];
+            this.FieldUrduNameTB.Location = new System.Drawing.Point(306, 50);
+            this.FieldUrduNameTB.MaxLength = 32767;
+            this.FieldUrduNameTB.Name = "FieldUrduNameTB";
+            this.FieldUrduNameTB.PasswordChar = '\0';
+            this.FieldUrduNameTB.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.FieldUrduNameTB.SelectedText = "";
+            this.FieldUrduNameTB.SelectionLength = 0;
+            this.FieldUrduNameTB.SelectionStart = 0;
+            this.FieldUrduNameTB.ShortcutsEnabled = true;
+            this.FieldUrduNameTB.Size = new System.Drawing.Size(297, 30);
+            this.FieldUrduNameTB.TabIndex = 1;
+            this.FieldUrduNameTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.FieldUrduNameTB.UseSelectable = true;
+            this.FieldUrduNameTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.FieldUrduNameTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // FieldUrduNameLabel
+            // 
+            this.FieldUrduNameLabel.Location = new System.Drawing.Point(302, 30);
+            this.FieldUrduNameLabel.Name = "FieldUrduNameLabel";
+            this.FieldUrduNameLabel.Size = new System.Drawing.Size(301, 19);
+            this.FieldUrduNameLabel.TabIndex = 45;
+            this.FieldUrduNameLabel.Text = "Field Urdu Name";
+            // 
+            // FieldSindhiNameTB
+            // 
+            // 
+            // 
+            // 
+            this.FieldSindhiNameTB.CustomButton.Image = null;
+            this.FieldSindhiNameTB.CustomButton.Location = new System.Drawing.Point(269, 2);
+            this.FieldSindhiNameTB.CustomButton.Name = "";
+            this.FieldSindhiNameTB.CustomButton.Size = new System.Drawing.Size(25, 25);
+            this.FieldSindhiNameTB.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.FieldSindhiNameTB.CustomButton.TabIndex = 1;
+            this.FieldSindhiNameTB.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.FieldSindhiNameTB.CustomButton.UseSelectable = true;
+            this.FieldSindhiNameTB.CustomButton.Visible = false;
+            this.FieldSindhiNameTB.FontSize = MetroFramework.MetroTextBoxSize.Medium;
+            this.FieldSindhiNameTB.Lines = new string[0];
+            this.FieldSindhiNameTB.Location = new System.Drawing.Point(3, 107);
+            this.FieldSindhiNameTB.MaxLength = 32767;
+            this.FieldSindhiNameTB.Name = "FieldSindhiNameTB";
+            this.FieldSindhiNameTB.PasswordChar = '\0';
+            this.FieldSindhiNameTB.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.FieldSindhiNameTB.SelectedText = "";
+            this.FieldSindhiNameTB.SelectionLength = 0;
+            this.FieldSindhiNameTB.SelectionStart = 0;
+            this.FieldSindhiNameTB.ShortcutsEnabled = true;
+            this.FieldSindhiNameTB.Size = new System.Drawing.Size(297, 30);
+            this.FieldSindhiNameTB.TabIndex = 2;
+            this.FieldSindhiNameTB.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.FieldSindhiNameTB.UseSelectable = true;
+            this.FieldSindhiNameTB.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.FieldSindhiNameTB.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // FieldSindhiNameLabel
+            // 
+            this.FieldSindhiNameLabel.Location = new System.Drawing.Point(-1, 87);
+            this.FieldSindhiNameLabel.Name = "FieldSindhiNameLabel";
+            this.FieldSindhiNameLabel.Size = new System.Drawing.Size(301, 19);
+            this.FieldSindhiNameLabel.TabIndex = 45;
+            this.FieldSindhiNameLabel.Text = "Field Sindhi Name";
             // 
             // MainForm
             // 
@@ -1492,6 +1654,15 @@ namespace EasyTailor
         private MetroFramework.Controls.MetroComboBox LanguageCombo;
         private MetroFramework.Controls.MetroComboBox PageCombo;
         private System.Drawing.Printing.PrintDocument Tailor8MMPrint;
+        private System.Drawing.Printing.PrintDocument Tailor8MMClothPrint;
+        private MetroFramework.Controls.MetroComboBox PrintLanguageCombo;
+        private MetroFramework.Controls.MetroLabel PrintLanguageLabel;
+        private MetroFramework.Controls.MetroLabel PhoneNoLabel;
+        private MetroFramework.Controls.MetroTextBox PhoneNoTB;
+        private MetroFramework.Controls.MetroLabel FieldSindhiNameLabel;
+        private MetroFramework.Controls.MetroLabel FieldUrduNameLabel;
+        private MetroFramework.Controls.MetroTextBox FieldSindhiNameTB;
+        private MetroFramework.Controls.MetroTextBox FieldUrduNameTB;
     }
 }
 

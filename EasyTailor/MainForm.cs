@@ -23,8 +23,10 @@ namespace EasyTailor
         {
             LanguageCombo.SelectedValueChanged -= LanguageCombo_SelectedValueChanged;
             GetSettings();
+            CheckFirstTime();
             ListUpdateBtn.Hide();
-            ConnectionString = "Data Source=DESKTOP-966OP3S;Initial Catalog=EasyTailor;Integrated Security=True";
+            ConnectionString = "Data Source = 192.168.10.99,1433; Initial Catalog = EasyRecycle; Persist Security Info = True; User ID = sa; Password = 48484859" ;
+            //"Data Source=DESKTOP-966OP3S;Initial Catalog=EasyTailor;Integrated Security=True"
             FieldGridView.DataSource = GetAllFields();
             GetFieldsInPanel();
             pictureBox1.ImageLocation = @"" + ShopNameTB.Text + ".jpg";
@@ -32,6 +34,21 @@ namespace EasyTailor
             LangauageChanger();
             LanguageCombo.SelectedValueChanged += LanguageCombo_SelectedValueChanged;
         }
+
+        private void CheckFirstTime()
+        {
+            if (LanguageCombo.Text == "") { LanguageCombo.Text = "ENGLISH"; }
+            if (PrintLanguageCombo.Text == "") { PrintLanguageCombo.Text = "ENGLISH"; }
+            if (PageCombo.Text == "") { PageCombo.Text = "8MM"; }
+
+            Properties.Settings.Default.Language = LanguageCombo.Text;
+            Properties.Settings.Default.PrintPage = PageCombo.Text;
+            Properties.Settings.Default.PrintLanguage = PrintLanguageCombo.Text;
+            Properties.Settings.Default.PX = this.Location.X;
+            Properties.Settings.Default.PY = this.Location.Y;
+            Properties.Settings.Default.Save();
+        }
+
         private void LangauageChanger()
         {
             if (LanguageCombo.Text == "ENGLISH")
@@ -49,7 +66,6 @@ namespace EasyTailor
 
         private void SetLangauage()
         {
-     
             ClothDetailLabel.Text = lan[0]; CustomerNameLabel.Text = lan[1]; CustomerNoLabel.Text = lan[2];
             NewInvoiceLabel.Text = lan[3]; DateLabel.Text = lan[4]; DeliveryDateLabel.Text = lan[5];
             InvoiceNoLabel.Text = lan[6]; InvoiceCustomerLabel.Text = lan[7]; InvoiceCustomerNoLabel.Text = lan[8];
@@ -62,14 +78,13 @@ namespace EasyTailor
             FieldNameLabel.Text = lan[22]; SearchFieldLabel.Text = lan[23]; AddFieldBtn.Text = lan[15];
             FieldResetBtn.Text = lan[14]; SearchBtn.Text = lan[21];
 
-
             ShopNameLabel.Text = lan[24]; ShopAddressLabel.Text = lan[25]; LanguageLabel.Text = lan[26];
             PrintPageLabel.Text = lan[27]; ShopQuoteLabel.Text = lan[28]; PrintNoteLabel.Text = lan[29];
             metroLabel16.Text = lan[30]; metroLabel18.Text = lan[31]; metroLabel17.Text = lan[32];
-            metroButton1.Text = lan[33];
+            metroButton1.Text = lan[33]; PhoneNoLabel.Text = lan[35]; PrintLanguageLabel.Text = lan[45];
         }
 
-        string[] lan = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+        string[] lan = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
         private DataTable GetLanguages()
         {
             DataTable dodb = new DataTable();
@@ -170,6 +185,8 @@ namespace EasyTailor
             PageCombo.Text = Properties.Settings.Default.PrintPage;
             ShopQuoteTB.Text = Properties.Settings.Default.ShopQuote;
             NoteTB.Text = Properties.Settings.Default.PrintNote;
+            PrintLanguageCombo.Text = Properties.Settings.Default.PrintLanguage;
+            PhoneNoTB.Text = Properties.Settings.Default.PhoneNo;
         }
 
         int lx = 8, ly = 9;
@@ -182,8 +199,19 @@ namespace EasyTailor
             {
                 MetroFramework.Controls.MetroLabel label;
                 label = new MetroFramework.Controls.MetroLabel();
-                
-                label.Text = row["FieldName"].ToString();
+
+                if (LanguageCombo.Text == "ENGLISH")
+                {
+                    label.Text = row["FieldName"].ToString();
+                }
+                if (LanguageCombo.Text == "URDU")
+                {
+                    label.Text = row["UrduName"].ToString();
+                }
+                if (LanguageCombo.Text == "SINDHI")
+                {
+                    label.Text = row["SindhiName"].ToString();
+                }
                 label.AutoSize = false;
                 label.Size = new Size(132, 20);
                 FieldPanel.Controls.Add(label);
@@ -191,7 +219,21 @@ namespace EasyTailor
 
                 MetroFramework.Controls.MetroTextBox tb;
                 tb = new MetroFramework.Controls.MetroTextBox();
+
                 tb.Name = row["FieldName"].ToString();
+
+                if (PrintLanguageCombo.Text == "ENGLISH")
+                {
+                    tb.Tag = row["FieldName"].ToString();
+                }
+                if (PrintLanguageCombo.Text == "URDU")
+                {
+                    tb.Tag = row["UrduName"].ToString();
+                }
+                if (PrintLanguageCombo.Text == "SINDHI")
+                {
+                    tb.Tag = row["SindhiName"].ToString();
+                }
                 tb.Size = new Size(130, 30);
                 tb.FontSize = MetroFramework.MetroTextBoxSize.Medium;
                 tb.TextChanged += Tb_TextChange;
@@ -238,7 +280,7 @@ namespace EasyTailor
             Fields.Rows.Clear();
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand(@"Select ID,ColumnName as 'FieldName' from TailorColumns where ColumnName LIKE '%' + @Search + '%' Order By ID asc", conn))
+                using (SqlCommand cmd = new SqlCommand(@"Select ID,ColumnName as 'FieldName',UrduName,SindhiName from TailorColumns where isnull(ColumnName ,'') + ' ' + isnull(UrduName ,'') + ' ' + isnull(SindhiName ,'') LIKE '%' + @Search + '%' Order By ID asc", conn))
                 {
                     conn.Open();
                     cmd.Parameters.AddWithValue("@Search", SearchFieldTB.Text);
@@ -324,6 +366,8 @@ namespace EasyTailor
         private void ClearScreen()
         {
             FieldNameTB.Clear();
+            FieldUrduNameTB.Clear();
+            FieldSindhiNameTB.Clear();
             AddFieldBtn.Text = lan[15];
             FieldNameTB.Focus();
         }
@@ -332,10 +376,12 @@ namespace EasyTailor
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Insert Into TailorColumns(ColumnName) VALUES(@ColumnName)", conn))
+                using (SqlCommand cmd = new SqlCommand("Insert Into TailorColumns(ColumnName,UrduName,SindhiName) VALUES(@ColumnName,@UrduName,@SindhiName)", conn))
                 {
                     conn.Open();
                     cmd.Parameters.AddWithValue("@ColumnName", FieldNameTB.Text);
+                    cmd.Parameters.AddWithValue("@UrduName", FieldUrduNameTB.Text);
+                    cmd.Parameters.AddWithValue("@SindhiName", FieldSindhiNameTB.Text);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -345,10 +391,12 @@ namespace EasyTailor
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Update TailorColumns Set ColumnName = @ColumnName where iD = @ID", conn))
+                using (SqlCommand cmd = new SqlCommand("Update TailorColumns Set ColumnName = @ColumnName , UrduName = @UrduName , SindhiName = @SindhiName where iD = @ID", conn))
                 {
                     conn.Open();
                     cmd.Parameters.AddWithValue("@ColumnName", FieldNameTB.Text);
+                    cmd.Parameters.AddWithValue("@UrduName", FieldUrduNameTB.Text);
+                    cmd.Parameters.AddWithValue("@SindhiName", FieldSindhiNameTB.Text);
                     cmd.Parameters.AddWithValue("@ID", FieldIdTB.Text);
                     cmd.ExecuteNonQuery();
                 }
@@ -416,6 +464,8 @@ namespace EasyTailor
                 FieldIdTB.Text = item.Cells[0].Value.ToString();
                 oldname = item.Cells[1].Value.ToString();
                 FieldNameTB.Text = item.Cells[1].Value.ToString();
+                FieldUrduNameTB.Text = item.Cells[2].Value.ToString();
+                FieldSindhiNameTB.Text = item.Cells[3].Value.ToString();
             }
         }
 
@@ -458,6 +508,10 @@ namespace EasyTailor
                         Tailor8MMPrint.Print();
                     }
                 }
+                if (MessageBox.Show(lan[46], "EASY", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                {
+                    Tailor8MMClothPrint.Print();
+                }
                 ClearCustomerScreen();
             }
             else
@@ -469,10 +523,11 @@ namespace EasyTailor
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Update Invoices SET Date = @Date,DeliveryDate = @DeliveryDate,CustomerName = @CustomerName,CustomerNo = @CustomerNo,DressQty = @DressQty,TotalAmount = @TotalAmount,Advance = @Advance,Balance = @Balance,Description = @Description where id = @Id", conn))
+                using (SqlCommand cmd = new SqlCommand("Update Invoices SET InvoiceNo = @InvoiceNo , Date = @Date,DeliveryDate = @DeliveryDate,CustomerName = @CustomerName,CustomerNo = @CustomerNo,DressQty = @DressQty,TotalAmount = @TotalAmount,Advance = @Advance,Balance = @Balance,Description = @Description where id = @Id", conn))
                 {
                     conn.Open();
                     cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@InvoiceNo", InvoiceNoTB.Text);
                     cmd.Parameters.AddWithValue("@Date", StandardDatePicker.Text);
                     cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
                     cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
@@ -491,9 +546,10 @@ namespace EasyTailor
         {
             using (SqlConnection conn = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Insert Into Invoices(Date,DeliveryDate,CustomerName,CustomerNo,DressQty,TotalAmount,Advance,Balance,Description) VALUES(@Date,@DeliveryDate,@CustomerName,@CustomerNo,@DressQty,@TotalAmount,@Advance,@Balance,@Description)", conn))
+                using (SqlCommand cmd = new SqlCommand("Insert Into Invoices(InvoiceNo,Date,DeliveryDate,CustomerName,CustomerNo,DressQty,TotalAmount,Advance,Balance,Description) VALUES(@InvoiceNo,@Date,@DeliveryDate,@CustomerName,@CustomerNo,@DressQty,@TotalAmount,@Advance,@Balance,@Description)", conn))
                 {
                     conn.Open();
+                    cmd.Parameters.AddWithValue("@InvoiceNo", InvoiceNoTB.Text);
                     cmd.Parameters.AddWithValue("@Date", StandardDatePicker.Text);
                     cmd.Parameters.AddWithValue("@DeliveryDate", DeliveryDatePicker.Text);
                     cmd.Parameters.AddWithValue("@CustomerName", CustomerNameTB.Text);
@@ -582,6 +638,7 @@ namespace EasyTailor
             ClothId = "";
             AddBtn.Text = lan[15];
             ListUpdateBtn.Hide();
+            AddBtn.Enabled = true;
             GetInvoiceNo();
             GetFieldsInPanel();
             CustomerNameTB.Focus();
@@ -1012,6 +1069,8 @@ namespace EasyTailor
             ClothId = btn.Tag.ToString();
             CheckCustomerDuplicate(btn.Name);
             metroTabControl1.SelectedTab = NewTab;
+            AddBtn.Enabled = false;
+            ListUpdateBtn.Text = lan[33];
             ListUpdateBtn.Show();
             CustomerNameTB.Focus();
         }
@@ -1204,6 +1263,7 @@ namespace EasyTailor
         {
             ClearCustomerScreen();
             UpdateClothDetail();
+            AddBtn.Enabled = true;
         }
 
         private void UpdateClothDetail()
@@ -1255,49 +1315,49 @@ namespace EasyTailor
 
         private void TailorPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Rectangle rect1 = new Rectangle(0, 0, 850, 100);
-            Rectangle rect2 = new Rectangle(200, 80, 450, 25);
-            Rectangle rect3 = new Rectangle(0, 110, 850, 25);
-            Rectangle rect4 = new Rectangle(0, 140, 850, 25);
-            Rectangle rect5 = new Rectangle(10, 205, 200, 200);
+            //Rectangle rect1 = new Rectangle(0, 0, 850, 100);
+            //Rectangle rect2 = new Rectangle(200, 80, 450, 25);
+            //Rectangle rect3 = new Rectangle(0, 110, 850, 25);
+            //Rectangle rect4 = new Rectangle(0, 140, 850, 25);
+            //Rectangle rect5 = new Rectangle(10, 205, 200, 200);
            
-            e.Graphics.FillRectangle(Brushes.DarkGreen,rect2);
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
+            //e.Graphics.FillRectangle(Brushes.DarkGreen,rect2);
+            //StringFormat stringFormat = new StringFormat();
+            //stringFormat.Alignment = StringAlignment.Center;
+            //stringFormat.LineAlignment = StringAlignment.Center;
 
-            e.Graphics.DrawString("CHIEF TAILORS", new Font("Arial Rounded MT", 36, FontStyle.Bold), Brushes.Red, rect1, stringFormat);
-            e.Graphics.DrawString("GENTS SPECIALIST", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.White, rect2, stringFormat);
+            //e.Graphics.DrawString("CHIEF TAILORS", new Font("Arial Rounded MT", 36, FontStyle.Bold), Brushes.Red, rect1, stringFormat);
+            //e.Graphics.DrawString("GENTS SPECIALIST", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.White, rect2, stringFormat);
 
-            e.Graphics.DrawString("ستوں روڈ ، ٹھٹہ (سندہ)۔", new Font("Jameel Noori Nastaleeq", 18, FontStyle.Bold), Brushes.DarkGreen, rect3, stringFormat);
+            //e.Graphics.DrawString("ستوں روڈ ، ٹھٹہ (سندہ)۔", new Font("Jameel Noori Nastaleeq", 18, FontStyle.Bold), Brushes.DarkGreen, rect3, stringFormat);
 
-            e.Graphics.DrawString("MOB: 0321-3270001", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, rect4, stringFormat);
+            //e.Graphics.DrawString("MOB: 0321-3270001", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, rect4, stringFormat);
 
-            Pen blackPen4 = new Pen(Color.DarkGreen, 1);
-            PointF point4 = new PointF(15, 170);
-            PointF point5 = new PointF(830, 170);
-            e.Graphics.DrawLine(blackPen4, point4, point5);
+            //Pen blackPen4 = new Pen(Color.DarkGreen, 1);
+            //PointF point4 = new PointF(15, 170);
+            //PointF point5 = new PointF(830, 170);
+            //e.Graphics.DrawLine(blackPen4, point4, point5);
 
-            e.Graphics.DrawString("Proprietor:", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, new Point(10, 170));
-            e.Graphics.DrawString("Veeram & Harri Lal", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.DarkGreen, rect5);
+            //e.Graphics.DrawString("Proprietor:", new Font("Arial Rounded MT", 18, FontStyle.Regular), Brushes.DarkGreen, new Point(10, 170));
+            //e.Graphics.DrawString("Veeram & Harri Lal", new Font("Arial Rounded MT", 18, FontStyle.Bold), Brushes.DarkGreen, rect5);
 
-            Pen blackPen = new Pen(Color.DarkGreen, 1);
-            e.Graphics.DrawRectangle(blackPen, rect5);
+            //Pen blackPen = new Pen(Color.DarkGreen, 1);
+            //e.Graphics.DrawRectangle(blackPen, rect5);
 
-            e.Graphics.DrawString("No.____________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 200));
-            e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(275, 195));
+            //e.Graphics.DrawString("No.____________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 200));
+            //e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(275, 195));
 
-            e.Graphics.DrawString("Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(400, 200));
-            e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(440, 195));
+            //e.Graphics.DrawString("Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(400, 200));
+            //e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(440, 195));
 
-            e.Graphics.DrawString("Delivery Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(600, 200));
-            e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(695, 195));
+            //e.Graphics.DrawString("Delivery Date: _______________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(600, 200));
+            //e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 12, FontStyle.Regular), Brushes.Black, new Point(695, 195));
 
-            e.Graphics.DrawString("Name: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 230));
-            e.Graphics.DrawString("MUHAMMAD ARSLAN ABBASI", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 230));
+            //e.Graphics.DrawString("Name: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 230));
+            //e.Graphics.DrawString("MUHAMMAD ARSLAN ABBASI", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 230));
 
-            e.Graphics.DrawString("Qty: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 260));
-            e.Graphics.DrawString("15", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 260));
+            //e.Graphics.DrawString("Qty: ___________________________________ نام", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(240, 260));
+            //e.Graphics.DrawString("15", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(288, 260));
 
         }
 
@@ -1322,12 +1382,15 @@ namespace EasyTailor
             Properties.Settings.Default.PrintPage = PageCombo.Text;
             Properties.Settings.Default.ShopQuote = ShopQuoteTB.Text;
             Properties.Settings.Default.PrintNote = NoteTB.Text;
+            Properties.Settings.Default.PhoneNo = PhoneNoTB.Text;
+            Properties.Settings.Default.PrintLanguage = PrintLanguageCombo.Text;
             Properties.Settings.Default.PX = this.Location.X;
             Properties.Settings.Default.PY = this.Location.Y;
             pictureBox1.Image.Save(@"" + ShopNameTB.Text + ".jpg");
             Properties.Settings.Default.Save();
 
             MessageBox.Show(lan[43], "EASY", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         private void metroLabel18_Click(object sender, EventArgs e)
@@ -1345,10 +1408,9 @@ namespace EasyTailor
                 }
             }
         }
-        string rl = "Left";
         private void Tailor8MMPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (rl == "Right")
+            if (PrintLanguageCombo.Text == "ENGLISH")
             {
                 e.Graphics.DrawImage(pictureBox1.Image, 5, 0, 50, 50);
 
@@ -1368,7 +1430,7 @@ namespace EasyTailor
 
                 e.Graphics.DrawString(ShopAddressTB.Text, new Font("Jameel Noori Nastaleeq", 12, FontStyle.Bold), Brushes.Black, rect3, stringFormat);
 
-                e.Graphics.DrawString("Call : 0301-14499025", new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect4);
+                e.Graphics.DrawString("Call : " + PhoneNoTB.Text, new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect4);
 
                 Pen blackPen4 = new Pen(Color.DarkGreen, 1);
                 PointF point4 = new PointF(0, 95);
@@ -1413,7 +1475,7 @@ namespace EasyTailor
                 e.Graphics.DrawString("Call : 0301-1499025 | 0318-0137714", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(28, 345));
             }
 
-            if (rl == "Left")
+           else if (PrintLanguageCombo.Text == "URDU")
             {
                 e.Graphics.DrawImage(pictureBox1.Image, 5, 0, 50, 50);
 
@@ -1477,6 +1539,71 @@ namespace EasyTailor
                 e.Graphics.DrawString("Software Developed By www.Easysoft.pk", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(15, 330));
                 e.Graphics.DrawString("Call : 0301-1499025 | 0318-0137714", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(28, 345));
             }
+
+            else if (PrintLanguageCombo.Text == "SINDHI")
+            {
+                e.Graphics.DrawImage(pictureBox1.Image, 5, 0, 50, 50);
+
+                Rectangle rect1 = new Rectangle(0, 0, 285, 40);
+                Rectangle rect2 = new Rectangle(0, 42, 285, 25);
+                Rectangle rect3 = new Rectangle(0, 65, 285, 30);
+                Rectangle rect4 = new Rectangle(0, 100, 285, 20);
+                Rectangle rect5 = new Rectangle(2, 280, 279, 50);
+
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center;
+                stringFormat.LineAlignment = StringAlignment.Center;
+
+                e.Graphics.DrawString(ShopNameTB.Text, new Font("Arial Rounded MT", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+                e.Graphics.DrawString(ShopQuoteTB.Text, new Font("Arial Rounded MT", 10, FontStyle.Bold), Brushes.Black, rect2, stringFormat);
+
+                e.Graphics.DrawString(ShopAddressTB.Text, new Font("Jameel Noori Nastaleeq", 12, FontStyle.Bold), Brushes.Black, rect3, stringFormat);
+
+                e.Graphics.DrawString("Call : 0301-14499025", new Font("Arial Rounded MT", 10, FontStyle.Regular), Brushes.Black, rect4);
+
+                Pen blackPen4 = new Pen(Color.DarkGreen, 1);
+                PointF point4 = new PointF(0, 95);
+                PointF point5 = new PointF(285, 95);
+                e.Graphics.DrawLine(blackPen4, point4, point5);
+
+                PointF point1 = new PointF(0, 120);
+                PointF point2 = new PointF(285, 120);
+                e.Graphics.DrawLine(blackPen4, point1, point2);
+
+                Pen blackPen = new Pen(Color.DarkGreen, 1);
+                e.Graphics.DrawRectangle(blackPen, rect5);
+
+                StringFormat format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+                e.Graphics.DrawString("رسید نمبر ---------", new Font("Sarem Mir Momin", 9, FontStyle.Regular), Brushes.Black, new Point(260, 130), format);
+                e.Graphics.DrawString(InvoiceNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(207, 124), format);
+
+                e.Graphics.DrawString("تاریخ -------------------", new Font("Sarem Mir Momin", 9, FontStyle.Regular), Brushes.Black, new Point(130, 130), format);
+                e.Graphics.DrawString(DateTime.Parse(StandardDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(27, 124));
+
+                e.Graphics.DrawString("پهچائڻ جي تاريخ -------------------", new Font("Sarem Mir Momin", 9, FontStyle.Regular), Brushes.Black, new Point(170, 150), format);
+                e.Graphics.DrawString(DateTime.Parse(DeliveryDatePicker.Text).ToString("dd-MMM-yyyy"), new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(27, 144));
+
+                e.Graphics.DrawString("نالو ---------------------------------------------------------", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(280, 180), format);
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(248, 174), format);
+
+                e.Graphics.DrawString("لباس جي مقدار -------------", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(260, 210), format);
+                e.Graphics.DrawString(DressQtyTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(200, 206), format);
+
+                e.Graphics.DrawString("ڪل رقم -----------------", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(120, 210), format);
+                e.Graphics.DrawString(TotalAmountTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(80, 206), format);
+
+                e.Graphics.DrawString("اڳڀرائي -----------------", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(260, 240), format);
+                e.Graphics.DrawString(AdvanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(230, 236), format);
+
+                e.Graphics.DrawString("بقایہ رقم -----------------", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(120, 240), format);
+                e.Graphics.DrawString(BalanceTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(80, 236), format);
+
+                e.Graphics.DrawString("نوٹ:", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(280, 260), format);
+                e.Graphics.DrawString(NoteTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, rect5, format);
+
+                e.Graphics.DrawString("Software Developed By www.Easysoft.pk", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(15, 330));
+                e.Graphics.DrawString("Call : 0301-1499025 | 0318-0137714", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(28, 345));
+            }
         }
 
         private void panel1_Paint_2(object sender, PaintEventArgs e)
@@ -1505,8 +1632,90 @@ namespace EasyTailor
         {
             if(e.KeyCode == Keys.F2)
             {
+                TailorPrintPreview.Document = Tailor8MMClothPrint;
+                TailorPrintPreview.ShowDialog();
+            }
+            if (e.KeyCode == Keys.F3)
+            {
                 TailorPrintPreview.Document = Tailor8MMPrint;
                 TailorPrintPreview.ShowDialog();
+            }
+        }
+
+        private void Tailor8MMClothPrint_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            int down = 140;
+            StringFormat format = new StringFormat(StringFormatFlags.DirectionRightToLeft);
+            Rectangle rect1 = new Rectangle(0, 0, 285, 40);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+            stringFormat.LineAlignment = StringAlignment.Center;
+
+            if (PrintLanguageCombo.Text == "ENGLISH")
+            {
+                e.Graphics.DrawString("CUSTOMER SIZE DETAIL", new Font("Arial Rounded MT", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+
+                e.Graphics.DrawString("Customer Name", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 50));
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 70));
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 68));
+
+                e.Graphics.DrawString("Phone No", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 90));
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 110));
+                e.Graphics.DrawString(CustomerNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 108));
+
+                foreach (DataRow row in Fields.Rows)
+                {
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Name, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(20, down));
+
+                    e.Graphics.DrawString("----------------", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(180, down + 5));
+                    e.Graphics.DrawString("_________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, down + 2));
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(180, down - 2));
+                    down = down + 25;
+                }
+            }
+
+            if (PrintLanguageCombo.Text == "URDU")
+            {
+                e.Graphics.DrawString("کسٹمر سائز کی تفصیل", new Font("Jameel Noori Nastaleeq", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+
+                e.Graphics.DrawString("گاہک کا نام", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(280, 47), format);
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 70));
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(280, 68), format);
+
+                e.Graphics.DrawString("فون نمبر", new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(280, 88), format);
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 110));
+                e.Graphics.DrawString(CustomerNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(280, 108), format);
+
+                foreach (DataRow row in Fields.Rows)
+                {
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Tag.ToString(), new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(260, down-6), format);
+                    e.Graphics.DrawString("----------------", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(20, down + 5));
+                    e.Graphics.DrawString("_________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, down + 2));
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Text, new Font("Jameel Noori Nastaleeq", 10, FontStyle.Regular), Brushes.Black, new Point(90, down - 6), format);
+                    down = down + 25;
+                }
+            }
+
+            if (PrintLanguageCombo.Text == "SINDHI")
+            {
+                e.Graphics.DrawString("ڪسٽمر سائيز تفصيل", new Font("Sarem Mir Momin", 13, FontStyle.Bold), Brushes.Black, rect1, stringFormat);
+
+                e.Graphics.DrawString("گراهڪ جو نالو", new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(280, 50), format);
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 70));
+                e.Graphics.DrawString(CustomerNameTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(280, 68), format);
+
+                e.Graphics.DrawString("فون نمبر", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(280, 90), format);
+                e.Graphics.DrawString("____________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, 110));
+                e.Graphics.DrawString(CustomerNoTB.Text, new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(280, 108), format);
+
+                foreach (DataRow row in Fields.Rows)
+                {
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Tag.ToString(), new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(260, down-6), format);
+                    e.Graphics.DrawString("----------------", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(20, down + 5));
+                    e.Graphics.DrawString("_________________________________________", new Font("Microsft Sans Sarif", 10, FontStyle.Regular), Brushes.Black, new Point(0, down + 2));
+                    e.Graphics.DrawString(FieldPanel.Controls[row["FieldName"].ToString()].Text, new Font("Sarem Mir Momin", 10, FontStyle.Regular), Brushes.Black, new Point(90, down - 6), format);
+                    down = down + 25;
+                }
             }
         }
 
